@@ -174,12 +174,6 @@ MPC_d <- MPC_d %>%
 
 MPC <- lm(price ~ Q, data = MPC_d)  # MPC Linear regression
 
-
-
-
-
-
-
 ```
 
 ```{r}
@@ -235,9 +229,9 @@ EC_sq <- EC(10, MPC, 0)
 
 ```{r}
 
-CS_l_sq <- CS(10, model_1_dem_low)  # comsumer benefit to low income
+CS_l_sq <- CS(10, model_dem_low)  # comsumer benefit to low income
 
-CS_h_sq <- CS(10, model_1_dem_high)
+CS_h_sq <- CS(10, model_dem_high)
 
 CS_l_p <- (CS_l_sq / CS_agg_sq) * 100   # Percent benefit to low income
 
