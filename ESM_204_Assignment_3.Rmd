@@ -30,7 +30,7 @@ model_1_dem_high
 ```{r}
 demand <-function(p,model)
   q <-(p - model$coefficients[[1]])/model$coefficients[[2]] 
-q <-ifelse(q<0,0,q)
-return(q)
+  q <-ifelse(q<0,0,q)
+  return(q)
 ```
 
