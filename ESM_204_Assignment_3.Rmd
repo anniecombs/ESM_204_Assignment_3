@@ -22,38 +22,38 @@ df <-read_csv("HW3_data.csv") %>%
   clean_names()
 ```
 ```{r}
-model_1_dem_low <-lm(price_cents ~q_low_kwh, data = df)
-model_1_dem_high <-lm(price_cents ~q_high_kwh, data = df)
+model_dem_low <-lm(price_cents ~ q_low_kwh, data = df)
+model_dem_high <-lm(price_cents ~ q_high_kwh, data = df)
 
-model_1_dem_low
-model_1_dem_high
+model_dem_low
+model_dem_high
 ```
-# need to rearrange the parameter to get Q(P)! 
+Need to rearrange the parameter to get Q(P)! 
 
-# Qgg = Qlow(P) + Qlow(h) 
+Qgg = Qlow(P) + Qlow(P) 
 
-# Importantly, since they-intercepts are different, we know that Qagg(P) will have a kink. I include an ifelse() statement to take
-# care of the kink.
+Importantly, since they-intercepts are different, we know that Qagg(P) will have a kink. ifelse() statement will take care of the kink.
 
-# define a function to get demand
+Define a function to get demand in terms of Q
 ```{r}
 demand <-function(p, model){
-  q <-(p - model$coefficients[[1]])/model$coefficients[[2]] 
-  q <-ifelse(q<0,0,q)
+  q <- (p - model$coefficients[[1]])/model$coefficients[[2]] 
+  q <- ifelse(q<0,0,q)
   return(q)}
 ```
 
 ```{r}
 # for each p level, return estimated aggregate demand
 demand_agg <- function(p){
-  q <- demand(p, model_1_dem_low) + demand(p, model_1_dem_high)
+  q <- demand(p, model_dem_low) + demand(p, model_dem_high)
   return(q)}
 
 ```
 
 ```{r}
-price = seq(0, 30, length.out = 100)
-Qagg <- map(price, demand_agg) %>% unlist()
+price = seq(0, model_dem_high$coefficient[1], length.out = 100)
+Qagg <- map(price, demand_agg) %>% 
+  unlist()
 
 df<- tibble(Qagg = Qagg, price = price)
 
@@ -73,7 +73,28 @@ CS_agg <- function(p){
   return(cs)}
 ```
 
-#1. One kWh of electricity emits 0.85 pounds of CO2. Assuming that the interim SCC correctly reflects the total social cost of one metric ton of CO2, what is the marginal externality cost per kwH of electricity?
+### 1. One kWh of electricity emits 0.85 pounds of CO2. Assuming that the interim SCC correctly reflects the total social cost of one metric ton of CO2, what is the marginal externality cost per kwH of electricity?
+
+```{r echo=FALSE}
+
+# Price of CO2 per lb, 1MT = 2204.62 lb,  $51 per MT of CO2
+
+mt_lb <- 2204.62    # Metric Ton (MT) in lbs
+
+P_lbco2 <- 51*mt_lb   # CO2 - price per lb ($/lb)
+
+C_emit_per_kwh <- 0.85     # 1kWh = 0.85lb CO2, 0.85lb/kWh
+
+#  will need this function in #4
+mec_f <- function(SCC) {              #  cents/kWh = ($/MT / (lb/MT)  * lb/kWh) * 100
+  round((SCC / mt_lb * C_emit_per_kwh) * 100, 3) 
+ 
+}      
+
+mec51 <- mec_f(51)   # SCC = $51 per MT
+
+```
+
 
 - Convert 0.85 lbCO2 to metric ton (ton) CO2
 
@@ -87,11 +108,143 @@ CS_agg <- function(p){
 
 = $0.01966305 / ton CO2 x Kwh
 
-Answer: about 2 cents per Kwh electricity
+Answer: The MEC is `r mec51` cents per Kwh electricity
 
 #2. What is the aggregate monthly demand curve for electricity? What is the supply curve for electricity? What is the “benefit” to consumers under the status quo? What is the “benefit” to producers under the status quo? What is the environmental cost under the status quo?
 
+```{r}
+
+# ASSUMING STATUS QUO IS WITH NOT MEC APPLIED - DO WE AGREE?
+
+# P = mQ + b
+
+ml <- model_dem_low$coefficient[2]  # slope of DL
+bl <- model_dem_low$coefficient[1]  # P int of DL
+
+mh <- model_dem_high$coefficient[2]  # slope of DH
+bh <- model_dem_high$coefficient[1]  # P int of DH
+
+# P = mQ + b
+# Q = P/m - b/m
+# Ql = P/ml - bl/ml , Qh = P/mh - bh/mh
+# Q = P/ml + P/mh - bl/ml - bh/mh 
+# Q = P*(ml + mh)/(ml*mh) - (bl/ml + bh/mh) 
+# Q = Sagg * P - Qint for Q > Qh_k
+
+Sagg <- (ml + mh)/(ml*mh)  # Slope of Qagg, Q > Qh_k
+Magg <- 1/Sagg             # Slope of Dagg, Q > Qh_k
+Qint <- -(bl/ml + bh/mh)  # Neg?  Only works this way
+
+# find Q at kink in Dagg at dem_low intercept (P = bl)
+# P = dem_high = bl = mhQh_k + bh 
+# Qh_k = (bl - bh)/mh
+
+
+Qh_k <- (bl - bh)/mh     # kink point of Dagg
+
+# Q <- Sagg * P - Qint
+
+# Dagg = P from above, P = (Q + Qint)/Sagg = (Magg)*(Q + Qint)
+ 
+# Dagg <- Magg*(Q + Qint)
+
+Dagg_d <- tibble(Q = seq(round(Qh_k, 0), Qint, 100))
+
+Dagg_d <- Dagg_d %>% 
+  mutate(price = Magg*(Q - Qint))
+
+Dagg <- lm(price ~ Q, data = Dagg_d)  # Linerar regression for Dagg(P) for Q > 158,329
+
+
+
+P_e <- 10    # current price of electricity in cents
+
+# Supply (MPC) goes thru P_e at Dagg and origin using Qagg = Sagg * P + Qint.  
+# Q_p_e is the run (Q) and P_e is the rise (P) for MPC, Oint = 0.
+
+Q_p_e <- Sagg*P_e + Qint   # Plug P-e into above equation to get intersection Q point
+
+m_MPC <- P_e / Q_p_e    # Slope of Supply (MPC)
+
+MPC_d <- tibble(Q = seq(0, Qint, 100))   # MPC data
+
+MPC_d <- MPC_d %>% 
+  mutate (price = m_MPC * Q)
+
+MPC <- lm(price ~ Q, data = MPC_d)  # MPC Linear regression
+
+
+
+
+
+
+
+```
+
+```{r}
+CS <- function(p, model){
+  q <- demand(p, model)
+  cs <- 0.5*(model$coefficients[[1]] - p)*q
+  return(cs)}
+
+CS_agg <- function(p){
+  cs <- CS(p,model_dem_low) + CS(p,model_dem_high)
+  return(cs)}
+  
+
+CS_agg_sq <-CS_agg(10)  # current price is 10 cents
+
+
+PS <- function(p, model){
+  q <- demand(p, model)
+  ps <- 0.5 * p * q
+  return(ps)}
+
+PS_agg <- function (p){
+  ps <- PS(p,model_dem_low) + PS(p,model_dem_high)
+  return(ps)}
+
+PS_sq <- PS(10, Dagg)
+
+PS_agg_sq <- PS_agg(10)
+
+EC <- function(p, model, mec){
+  q <- demand(p, model)
+  ec <- 0.5 * (p - mec) * q + mec * q
+  return(ec)}
+
+EC_sq <- EC(10, MPC, 0)
+
+```
+
+#### Aggregate Demand Curve: 
+#### Dagg = `r round(model_dem_high$coefficient[2], 5)`*Q + `r round(model_dem_high$coefficient[1], 1)` for Q < `r Qh_k`
+#### Dagg = `r round(Dagg$coefficient[2], 5)`*Q + `r round(Dagg$coefficient[1], 1)` for Q > `r Qh_k`
+
+# --
+#### Current supply curve: MPC = `r round(MPC$coefficient[2], 5)`*Q + `r round(MPC$coefficient[1], 1)`
+
+#### Comsumer Benefit: `r round(CS_agg_sq, 0)`
+
+#### Producer Benefit: `r round(PS_agg_sq, 0)`
+
+#### Environmental cost: `r round(EC_sq, 0)`
+
 #3. How is the current consumer benefit divided between “high” and “low” income consumers?
+
+```{r}
+
+CS_l_sq <- CS(10, model_1_dem_low)  # comsumer benefit to low income
+
+CS_h_sq <- CS(10, model_1_dem_high)
+
+CS_l_p <- (CS_l_sq / CS_agg_sq) * 100   # Percent benefit to low income
+
+CS_h_p <- (CS_h_sq / CS_agg_sq) * 100
+
+```
+
+#### Consumer Benefit Split:  `r round(CS_l_p, 1)`% Low &  `r round(CS_h_p, 1)`% High
 
 #4. Derive the optimal electricity tax (in cents per kWh) using the interim SCC. Noting that recent research has shown the poor face a disproportionate share of the impacts from climate change, assume that the climate externality is borne entirely by the “low” income group. What would be the effects of this tax on:
 
@@ -110,6 +263,32 @@ Answer: about 2 cents per Kwh electricity
 #(g) Total tax revenue generated
 
 #5. Now, assume that all revenue from the electricity tax will be redistributed to the consumers in proportion to their pre-tax consumption. For example, if 80% of the electricity was consumed by “high” income consumers, then they get 80% of the tax revenue. Additionally, consider the fact that current scientific evidence suggests the true SCC may be much higher than $51. For a range of SCC values ($51, $75, $100, $125, and $150 per metric ton of CO2), calculate the effects of an SCC-based electricity tax on:
+
+```{r}
+
+MSC_F <- function(mec) {          # function to calculate MSC at different
+  mscF <- MPC_d %>% 
+  mutate(price = price + mec)
+  lm(price ~ Q, data = mscF)      # put in function, so have no data table
+}
+
+MSC51 <- MSC_F(mec51)             # Marginal Social Cost linear regression SCC of 51
+
+# MSC <- lm(price ~ Q, data = mscF)
+
+mec75 <- mec_f(75)    # maybe these two functions can be combined?
+MSC75 <- MSC_F(75)    
+
+mec100 <- mec_f(100)
+MSC100 <- MSC_F(100)
+
+mec125 <- mec_f(125)
+MSC125 <- MSC_F(125)
+
+mec150 <- mec_f(150)
+MSC150 <- MSC_F(150)
+```
+
 
 #(a) Overall welfare of “high” income consumers
 
