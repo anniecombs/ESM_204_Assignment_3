@@ -75,6 +75,9 @@ CS_agg <- function(p){
 
 #1. One kWh of electricity emits 0.85 pounds of CO2. Assuming that the interim SCC correctly reflects the total social cost of one metric ton of CO2, what is the marginal externality cost per kwH of electricity?
 
+- bullet point format for answers
+- will place the answer to this question here. I am working it out on paper and will translate when done (Annie)
+
 #2. What is the aggregate monthly demand curve for electricity? What is the supply curve for electricity? What is the “benefit” to consumers under the status quo? What is the “benefit” to producers under the status quo? What is the environmental cost under the status quo?
 
 #3. How is the current consumer benefit divided between “high” and “low” income consumers?
