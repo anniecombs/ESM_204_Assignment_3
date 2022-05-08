@@ -115,6 +115,7 @@ Answer: The MEC is `r mec51` cents per Kwh electricity
 ```{r}
 
 # ASSUMING STATUS QUO IS WITH NOT MEC APPLIED - DO WE AGREE?
+#I agree! But does it make sense to have the status quo be BAU (0.85Q)?
 
 # P = mQ + b
 
