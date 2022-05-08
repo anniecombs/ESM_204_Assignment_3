@@ -9,3 +9,12 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+```{r}
+library(tidyverse)
+library(rootSolve)
+```
+
+```{r}
+df <-read_csv("HW3_data.csv")
+```
+
