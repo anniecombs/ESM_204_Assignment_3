@@ -66,12 +66,11 @@ ggplot(df, aes(Qagg, price)) +
 CS <- function(p, model){
   q <- demand(p, model)
   cs <- 0.5*(model$coefficients[[1]] - p)*q
-  return(cs)
-}
+  return(cs)}
 
 CS_agg <- function(p){
   cs <- CS(p,model_demand_l) + CS(p,model_demand_h)
-  return(cs)
-}
+  return(cs)}
 ```
 
+#1. One kWh of electricity emits 0.85 pounds of CO2. Assuming that the interim SCC correctly reflects the total social cost of one metric ton of CO2, what is the marginal externality cost per kwH of electricity?
