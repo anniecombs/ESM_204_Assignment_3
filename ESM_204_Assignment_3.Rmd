@@ -75,8 +75,19 @@ CS_agg <- function(p){
 
 #1. One kWh of electricity emits 0.85 pounds of CO2. Assuming that the interim SCC correctly reflects the total social cost of one metric ton of CO2, what is the marginal externality cost per kwH of electricity?
 
-- bullet point format for answers
-- will place the answer to this question here. I am working it out on paper and will translate when done (Annie)
+- Convert 0.85 lbCO2 to metric ton (ton) CO2
+
+0.85 lb CO2 x 0.000453592 ton CO2/lb CO2
+
+= 0.0003855535 ton CO2 / Kwh
+
+- Multiply ton value by price per ton CO2 to get the marginal cost of the externality
+
+0.0003855535 ton CO2 / Kwh x $51 / ton CO2
+
+= $0.01966305 / ton CO2 x Kwh
+
+Answer: about 2 cents per Kwh electricity
 
 #2. What is the aggregate monthly demand curve for electricity? What is the supply curve for electricity? What is the “benefit” to consumers under the status quo? What is the “benefit” to producers under the status quo? What is the environmental cost under the status quo?
 
