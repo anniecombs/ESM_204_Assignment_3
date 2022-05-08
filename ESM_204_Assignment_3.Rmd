@@ -27,4 +27,10 @@ model_1_dem_high <-lm(price_cents ~q_high_kwh, data = df)
 model_1_dem_low
 model_1_dem_high
 ```
+```{r}
+demand <-function(p,model)
+  q <-(p - model$coefficients[[1]])/model$coefficients[[2]] 
+q <-ifelse(q<0,0,q)
+return(q)
+```
 
