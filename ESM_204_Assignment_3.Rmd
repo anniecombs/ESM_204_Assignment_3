@@ -13,6 +13,7 @@ knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
 library(rootSolve)
 library(janitor)
+library(tibble)
 ```
 
 ```{r}
@@ -36,17 +37,17 @@ model_1_dem_high
 
 # define a function to get demand
 ```{r}
-demand <-function(p, model){}
+demand <-function(p, model){
   q <-(p - model$coefficients[[1]])/model$coefficients[[2]] 
   q <-ifelse(q<0,0,q)
   return(q)}
 ```
+
 ```{r}
 # for each p level, return estimated aggregate demand
 demand_agg <- function(p){
-  q <- demand(p, model_demand_l) + demand(p, model_demand_h)
-  return(q)
-}
+  q <- demand(p, model_1_dem_low) + demand(p, model_1_dem_high)
+  return(q)}
 
 ```
 
