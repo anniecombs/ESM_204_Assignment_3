@@ -110,6 +110,11 @@ mec51 <- mec_f(51)   # SCC = $51 per MT
 
 Answer: The MEC is `r mec51` cents per Kwh electricity
 
+```{r}
+MEC <- mec51
+```
+
+
 #2. What is the aggregate monthly demand curve for electricity? What is the supply curve for electricity? What is the “benefit” to consumers under the status quo? What is the “benefit” to producers under the status quo? What is the environmental cost under the status quo?
 
 ```{r}
