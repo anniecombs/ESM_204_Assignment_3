@@ -296,7 +296,16 @@ mec150 <- mec_f(150)
 MSC150 <- MSC_F(150)
 ```
 
+# The tax should be where the MEC meets the Q* (socially optimal quantity). In this case, the MEC is a straight, horizontal line, so the t* will simply equal around 2 cents per Kwh electricity. 
 
+
+```{r}
+ggplot(model_dem_low, aes(price_cents, q_low_kwh))+
+  geom_line()
+
+ggplot(model_dem_high, aes(price_cents, q_high_kwh))+
+  geom_line()
+```
 #(a) Overall welfare of “high” income consumers
 
 #(b) Overall welfare of “low” income consumers
