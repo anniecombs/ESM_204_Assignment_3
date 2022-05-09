@@ -296,7 +296,7 @@ mec150 <- mec_f(150)
 MSC150 <- MSC_F(150)
 ```
 
-# The tax should be where the MEC meets the Q* (socially optimal quantity). In this case, the MEC is a straight, horizontal line, so the t* will simply equal around 2 cents per Kwh electricity. 
+# The tax should be where the MEC meets the Q star (socially optimal quantity). In this case, the MEC is a straight, horizontal line, so the t star will simply equal around 2 cents per Kwh electricity. 
 
 # Graph the demand curves and the aggregate in one graph with the MES, MSC, and MPC
 
