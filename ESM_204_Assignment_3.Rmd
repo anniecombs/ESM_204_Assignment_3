@@ -112,11 +112,17 @@ mec51 <- mec_f(51)   # SCC = $51 per MT
 
 # --
 
+```{r}
+MEC <- mec51
+```
+
+
 #2. What is the aggregate monthly demand curve for electricity? What is the supply curve for electricity? What is the “benefit” to consumers under the status quo? What is the “benefit” to producers under the status quo? What is the environmental cost under the status quo?
 
 ```{r}
 
 # ASSUMING STATUS QUO IS WITH NOT MEC APPLIED - DO WE AGREE?
+#I agree! But does it make sense to have the status quo be BAU (0.85Q)?
 
 # P = mQ + b
 
@@ -175,12 +181,6 @@ MPC_d <- MPC_d %>%
 
 MPC <- lm(price ~ Q, data = MPC_d)  # MPC Linear regression
 
-
-
-
-
-
-
 ```
 
 ```{r}
@@ -225,7 +225,7 @@ EC_sq <- EC(10, MPC, 0)
 
 #### Current supply curve: MPC = `r round(MPC$coefficient[2], 5)`*Q + `r round(MPC$coefficient[1], 1)`
 
-#### Comsumer Benefit: `r round(CS_agg_sq, 0)`
+#### Consumer Benefit: `r round(CS_agg_sq, 0)`
 
 #### Producer Benefit: `r round(PS_agg_sq, 0)`
 
@@ -238,7 +238,11 @@ EC_sq <- EC(10, MPC, 0)
 
 ```{r}
 
+<<<<<<< HEAD
 CS_l_sq <- CS(10, model_dem_low)  # consumer benefit to low income
+=======
+CS_l_sq <- CS(10, model_dem_low)  # comsumer benefit to low income
+>>>>>>> d6bbf027e3732a7e05afdec3cf306edb41ff7382
 
 CS_h_sq <- CS(10, model_dem_high)
 
@@ -249,6 +253,28 @@ CS_h_p <- (CS_h_sq / CS_agg_sq) * 100
 ```
 
 
+<<<<<<< HEAD
+=======
+Graphs if we want o show any.  It doesn't ask for any.
+```{r}
+
+ # Join MC Data into one dataset for plotting
+
+join_data <- bind_rows('Low' = model_dem_low, 
+                       'High' = model_dem_high,
+                       'Aggregate' = Dagg,
+                       "MPC(S)" = MPC,
+                       "MEC" = MEC,
+                       "MSC51" = MSC51,
+                       .id = 'Curves')
+
+ggplot(data = join_data, aes(x = Q, 
+                             y = price, 
+                             color = Curves)) +
+  geom_line()
+```
+
+>>>>>>> d6bbf027e3732a7e05afdec3cf306edb41ff7382
 
 #### Consumer Benefit Split:  `r round(CS_l_p, 1)`% Low &  `r round(CS_h_p, 1)`% High
 # --
@@ -311,6 +337,7 @@ MSC150 <- MSC_F(150)
 #(c) What value of the electricity tax makes the total environmental damage the same as the damage when solar panels are available to the high income group?
 
 Graphs if we want to show any.  It doesn't ask for any.  We would need to convert lms to dfs where we don't have them.  Maybe the extra work isn't worth it but wouldn't take much.
+- I agree that this might be super helpful. If it isn't too much extra trouble, I say we do it.
 ```{r}
 
 MEC51 <- tibble(Q = seq(0, Qint, 100), price = mec51)
