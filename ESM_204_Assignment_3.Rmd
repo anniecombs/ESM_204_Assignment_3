@@ -224,7 +224,7 @@ EC_sq <- EC(10, MPC, 0)
 # --
 #### Current supply curve: MPC = `r round(MPC$coefficient[2], 5)`*Q + `r round(MPC$coefficient[1], 1)`
 
-#### Comsumer Benefit: `r round(CS_agg_sq, 0)`
+#### Consumer Benefit: `r round(CS_agg_sq, 0)`
 
 #### Producer Benefit: `r round(PS_agg_sq, 0)`
 
@@ -247,7 +247,6 @@ CS_h_p <- (CS_h_sq / CS_agg_sq) * 100
 
 Graphs if we want o show any.  It doesn't ask for any.
 ```{r}
-
 
  # Join MC Data into one dataset for plotting
 
