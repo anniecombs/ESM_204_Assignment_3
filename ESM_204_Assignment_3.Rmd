@@ -327,6 +327,7 @@ MSC150 <- MSC_F(150)
 #(c) What value of the electricity tax makes the total environmental damage the same as the damage when solar panels are available to the high income group?
 
 Graphs if we want to show any.  It doesn't ask for any.  We would need to convert lms to dfs where we don't have them.  Maybe the extra work isn't worth it but wouldn't take much.
+- I agree that this might be super helpful. If it isn't too much extra trouble, I say we do it.
 ```{r}
 
 MEC51 <- tibble(Q = seq(0, Qint, 100), price = mec51)
