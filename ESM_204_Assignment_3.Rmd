@@ -238,11 +238,8 @@ EC_sq <- EC(10, MPC, 0)
 
 ```{r}
 
-<<<<<<< HEAD
-CS_l_sq <- CS(10, model_dem_low)  # consumer benefit to low income
-=======
+
 CS_l_sq <- CS(10, model_dem_low)  # comsumer benefit to low income
->>>>>>> d6bbf027e3732a7e05afdec3cf306edb41ff7382
 
 CS_h_sq <- CS(10, model_dem_high)
 
@@ -252,29 +249,6 @@ CS_h_p <- (CS_h_sq / CS_agg_sq) * 100
 
 ```
 
-
-<<<<<<< HEAD
-=======
-Graphs if we want o show any.  It doesn't ask for any.
-```{r}
-
- # Join MC Data into one dataset for plotting
-
-join_data <- bind_rows('Low' = model_dem_low, 
-                       'High' = model_dem_high,
-                       'Aggregate' = Dagg,
-                       "MPC(S)" = MPC,
-                       "MEC" = MEC,
-                       "MSC51" = MSC51,
-                       .id = 'Curves')
-
-ggplot(data = join_data, aes(x = Q, 
-                             y = price, 
-                             color = Curves)) +
-  geom_line()
-```
-
->>>>>>> d6bbf027e3732a7e05afdec3cf306edb41ff7382
 
 #### Consumer Benefit Split:  `r round(CS_l_p, 1)`% Low &  `r round(CS_h_p, 1)`% High
 # --
