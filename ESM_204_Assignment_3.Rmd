@@ -262,6 +262,14 @@ Q* is equal to the MEC from question 1 and therefore is equal to `r mec51`
 
 #(b) The price of electricity
 - This is P*
+P = b + mQ
+Dagg normal = P = b - t* + mQ 
+
+Set this expression equal to the supply curve
+
+Dagg socially optimal = b - t* + mQ = 0.1Q
+
+
 
 #(c) Overall welfare of “high” income consumers
 
