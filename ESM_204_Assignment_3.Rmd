@@ -302,15 +302,16 @@ MSC150 <- MSC_F(150)
 
 ## Step 1: graph demand curves
 ```{r}
-ggplot(model_dem_low, aes(price_cents, q_low_kwh))+
+ggplot(model_dem_low, aes(q_low_kwh, price_cents))+
   geom_line()
 
-ggplot(model_dem_high, aes(price_cents, q_high_kwh))+
+ggplot(model_dem_high, aes(q_high_kwh, price_cents))+
   geom_line()
 ```
 
 #(a) Overall welfare of “high” income consumers
-- CS for high income consumers (will graph)
+- Set the MEC equal to the mQ
+`r mec51` = 
 #(b) Overall welfare of “low” income consumers
 - CS for low income consumers (will graph)
 #(c) Electricity producers
