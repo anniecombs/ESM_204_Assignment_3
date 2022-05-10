@@ -247,7 +247,7 @@ EC_sq <- EC(10, MPC, 0)
 ```{r}
 
 
-CS_l_sq <- CS(10, model_dem_low)  # comsumer benefit to low income
+CS_l_sq <- CS(10, model_dem_low)  # consumer benefit to low income
 
 CS_h_sq <- CS(10, model_dem_high)
 
