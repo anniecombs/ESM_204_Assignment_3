@@ -60,6 +60,7 @@ df<- tibble(Qagg = Qagg, price = price)
 ggplot(df, aes(Qagg, price)) +
   geom_line()
 ```
+
 # I also define functions for calculating the consumer surplus:
 
 ```{r}
@@ -269,7 +270,7 @@ Set this expression equal to the supply curve
 
 Dagg socially optimal = b - t* + mQ = 0.1Q
 
-
+b is the y intercept of the Dagg function
 
 #(c) Overall welfare of “high” income consumers
 
