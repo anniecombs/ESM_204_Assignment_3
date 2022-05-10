@@ -6,7 +6,7 @@ output: html_document
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE)
 ```
 
 ```{r}
@@ -163,7 +163,7 @@ Dagg_d <- Dagg_d %>%
 
 Dagg <- lm(price ~ Q, data = Dagg_d)  # Linerar regression for Dagg(P) for Q > 158,329
 
-
+Dagg
 
 P_e <- 10    # current price of electricity in cents
 
@@ -181,6 +181,7 @@ MPC_d <- MPC_d %>%
 
 MPC <- lm(price ~ Q, data = MPC_d)  # MPC Linear regression
 
+MPC
 ```
 
 ```{r}
