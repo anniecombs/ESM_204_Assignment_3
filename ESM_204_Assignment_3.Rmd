@@ -270,7 +270,9 @@ Set this expression equal to the supply curve
 
 Dagg socially optimal = b - t* + mQ = 0.1Q
 
-b is the y intercept of the Dagg function
+b is the y intercept of the Dagg function which is 2.897e+01 as previously calculated.
+
+2.897e+01 - t* + m_MPC = 0.1Q
 
 #(c) Overall welfare of “high” income consumers
 
