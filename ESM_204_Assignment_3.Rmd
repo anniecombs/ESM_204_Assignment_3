@@ -218,7 +218,6 @@ Dagg_d <- Dagg_d %>%
 
 Dagg <- lm(price ~ Q, data = Dagg_d)  # Linear regression for Dagg(P) for Q > 158,329
 
-Dagg
 
 P_e <- 10    # current price of electricity in cents
 
