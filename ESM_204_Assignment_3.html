@@ -311,9 +311,15 @@ Dagg_d &lt;- Dagg_d %&gt;%
 
 Dagg &lt;- lm(price ~ Q, data = Dagg_d)  # Linerar regression for Dagg(P) for Q &gt; 158,329
 
-
-
-P_e &lt;- 10    # current price of electricity in cents
+Dagg</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = price ~ Q, data = Dagg_d)
+## 
+## Coefficients:
+## (Intercept)            Q  
+##   2.897e+01   -3.534e-05</code></pre>
+<pre class="r"><code>P_e &lt;- 10    # current price of electricity in cents
 
 # Supply (MPC) goes thru P_e at Dagg and origin using Qagg = Sagg * P + Qint.  
 # Q_p_e is the run (Q) and P_e is the rise (P) for MPC, Oint = 0.
@@ -327,7 +333,16 @@ MPC_d &lt;- tibble(Q = seq(0, Qint, 100))   # MPC data
 MPC_d &lt;- MPC_d %&gt;% 
   mutate (price = m_MPC * Q)
 
-MPC &lt;- lm(price ~ Q, data = MPC_d)  # MPC Linear regression</code></pre>
+MPC &lt;- lm(price ~ Q, data = MPC_d)  # MPC Linear regression
+
+MPC</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = price ~ Q, data = MPC_d)
+## 
+## Coefficients:
+## (Intercept)            Q  
+##  -3.641e-14    1.863e-05</code></pre>
 <pre class="r"><code>CS &lt;- function(p, model){
   q &lt;- demand(p, model)
   cs &lt;- 0.5*(model$coefficients[[1]] - p)*q
@@ -403,12 +418,13 @@ CS_h_p &lt;- (CS_h_sq / CS_agg_sq) * 100</code></pre>
 </div>
 <div id="a-the-amount-of-electricity-produced-and-consumed" class="section level1">
 <h1>(a) The amount of electricity produced and consumed</h1>
-<ul>
-<li>Set the MEC equal to the mQ 1.966 =</li>
-</ul>
+<p>Find Q<em> Q</em> is equal to the MEC from question 1 and therefore is equal to 1.966</p>
 </div>
 <div id="b-the-price-of-electricity" class="section level1">
 <h1>(b) The price of electricity</h1>
+<ul>
+<li>This is P*</li>
+</ul>
 </div>
 <div id="c-overall-welfare-of-high-income-consumers" class="section level1">
 <h1>(c) Overall welfare of “high” income consumers</h1>
