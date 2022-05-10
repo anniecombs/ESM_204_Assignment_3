@@ -256,6 +256,11 @@ CS_h_p <- (CS_h_sq / CS_agg_sq) * 100
 #4. Derive the optimal electricity tax (in cents per kWh) using the interim SCC. Noting that recent research has shown the poor face a disproportionate share of the impacts from climate change, assume that the climate externality is borne entirely by the “low” income group. What would be the effects of this tax on:
 
 #(a) The amount of electricity produced and consumed
+- Set the MEC equal to the mQ
+`r mec51` = 
+```{r}
+
+```
 
 #(b) The price of electricity
 
@@ -310,8 +315,7 @@ ggplot(model_dem_high, aes(q_high_kwh, price_cents))+
 ```
 
 #(a) Overall welfare of “high” income consumers
-- Set the MEC equal to the mQ
-`r mec51` = 
+
 #(b) Overall welfare of “low” income consumers
 - CS for low income consumers (will graph)
 #(c) Electricity producers
