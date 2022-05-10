@@ -271,6 +271,10 @@ b is the y intercept of the Dagg function which is 2.897e+01 as previously calcu
 
 2.897e+01 - t* + m_MPC = 0.1Q
 
+0.1(`r mec51`) - 2.897e+01 + m_MPC = -t*
+
+t* = 2.5216 cents per Kwh
+
 #(c) Overall welfare of “high” income consumers
 
 #(d) Overall welfare of “low” income consumers
