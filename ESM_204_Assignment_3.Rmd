@@ -37,6 +37,13 @@ demand <-function(p, model){
   q <- (p - model$coefficients[[1]])/model$coefficients[[2]] 
   q <- ifelse(q<0,0,q)
   return(q)}
+
+demand_l_2 <- demand(p=2, model = model_dem_low)
+
+demand_h_2 <- demand(p=2, model = model_dem_high)
+
+price <- 0.5
+quantity <- demand_agg(price)
 ```
 
 ```{r}
@@ -45,6 +52,8 @@ demand_agg <- function(p){
   q <- demand(p, model_dem_low) + demand(p, model_dem_high)
   return(q)}
 
+price <- 2
+quantity <- demand_agg(price)
 ```
 
 ```{r}
@@ -159,7 +168,7 @@ Dagg_d <- tibble(Q = seq(round(Qh_k, 0), Qint, 100))
 Dagg_d <- Dagg_d %>% 
   mutate(price = Magg*(Q - Qint))
 
-Dagg <- lm(price ~ Q, data = Dagg_d)  # Linerar regression for Dagg(P) for Q > 158,329
+Dagg <- lm(price ~ Q, data = Dagg_d)  # Linear regression for Dagg(P) for Q > 158,329
 
 Dagg
 
