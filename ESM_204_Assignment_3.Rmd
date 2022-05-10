@@ -24,9 +24,6 @@ df <-read_csv("HW3_data.csv") %>%
 ```{r}
 model_dem_low <-lm(price_cents ~ q_low_kwh, data = df)
 model_dem_high <-lm(price_cents ~ q_high_kwh, data = df)
-
-model_dem_low
-model_dem_high
 ```
 Need to rearrange the parameter to get Q(P)! 
 
@@ -317,10 +314,13 @@ MSC150 <- MSC_F(150)
 
 ## Step 1: graph demand curves *THESE ARE WRONG - I will fix (Annie)*
 ```{r}
-ggplot(model_dem_low, aes(q_low_kwh, price_cents))+
+ggplot(df, aes(Qagg, price)) +
   geom_line()
 
-ggplot(model_dem_high, aes(q_high_kwh, price_cents))+
+ggplot(model_1_dem_low, aes(q_low_kwh, price_cents))+
+  geom_line()
+
+ggplot(model_1_dem_high, aes(q_high_kwh, price_cents))+
   geom_line()
 ```
 
