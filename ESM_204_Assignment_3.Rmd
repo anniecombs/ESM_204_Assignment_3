@@ -383,17 +383,8 @@ MSC150 <- MSC_F(150)
 
 # Graph the demand curves and the aggregate in one graph with the MES, MSC, and MPC
 
-## Step 1: graph demand curves *THESE ARE WRONG - I will fix (Annie)*
-```{r}
-ggplot(df, aes(Qagg, price)) +
-  geom_line()
+## Step 1: graph demand curves (see above)
 
-ggplot(model_1_dem_low, aes(q_low_kwh, price_cents))+
-  geom_line()
-
-ggplot(model_1_dem_high, aes(q_high_kwh, price_cents))+
-  geom_line()
-```
 
 #(a) Overall welfare of “high” income consumers
 
