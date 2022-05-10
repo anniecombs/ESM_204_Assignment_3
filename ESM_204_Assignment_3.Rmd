@@ -315,7 +315,7 @@ MSC150 <- MSC_F(150)
 
 # Graph the demand curves and the aggregate in one graph with the MES, MSC, and MPC
 
-## Step 1: graph demand curves
+## Step 1: graph demand curves *THESE ARE WRONG - I will fix (Annie)*
 ```{r}
 ggplot(model_dem_low, aes(q_low_kwh, price_cents))+
   geom_line()
