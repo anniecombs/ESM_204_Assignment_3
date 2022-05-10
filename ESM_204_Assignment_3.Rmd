@@ -80,6 +80,54 @@ CS_agg <- function(p){
   return(cs)}
 ```
 
+```{r}
+
+#demand function
+demand <- function(p, model){
+  q <- (p - model$coefficients[[1]])/model$coefficients[[2]]
+  q <- ifelse(q<0,0,q)
+  return(q)
+}
+#aggregate demand
+demand_agg <- function(p){
+  q <- demand(p, model_dem_low) + demand(p, model_dem_high)
+  return(q)
+}
+#price vector
+price = seq(0, 30, length.out = 100)
+#applying the aggregate demand function to the price vector
+Qagg <- map(price, demand_agg) %>% unlist()
+#making the new dataframe with Qagg and price
+agg_data<- tibble(Qagg = Qagg, price = price)
+#making predicted dataframes with low and high models
+l_pred <- tibble(price = price,
+                 demand = demand(price, model_dem_low))
+l_pred[l_pred == 0] <- NA
+h_pred <- tibble(price = price,
+                 demand = demand(price, model_dem_high))
+#MPC line
+qfm <- demand_agg(10)
+MPC_slope <- 10/qfm
+supply <- function(q){
+  p <- MPC_slope * q
+  return(p)
+}
+MPC <- tibble(price = supply(agg_data$Qagg),
+              demand = agg_data$Qagg)
+#plot
+ggplot() +
+  geom_line(agg_data, mapping = aes(x = Qagg, y = price, color = "Aggregate", lty = "Aggregate")) +
+  geom_line(l_pred, mapping = aes(x = demand, y = price, color = "Low income", lty = "Low income")) +
+  geom_line(h_pred, mapping = aes(x = demand, y = price, color = "High income", lty = "High income")) +
+  geom_line(MPC, mapping = aes(x = demand, y = price, color = "MPC", lty = "MPC")) +
+  geom_segment(aes(x = 0, y = 1.8, xend = 819713.75, yend = 1.8, color = "MEC", lty = "MEC")) +
+  geom_line(MPC, mapping = aes(x = demand, y = price + 1.8, color = "MSC", lty = "MSC")) +
+  labs(x = "Quantity (kWh)",
+       y = "Price (cents)",
+       color = "Demand Curve") +
+  theme_minimal()
+```
+
 ### 1. One kWh of electricity emits 0.85 pounds of CO2. Assuming that the interim SCC correctly reflects the total social cost of one metric ton of CO2, what is the marginal externality cost per kwH of electricity?
 
 ```{r echo=FALSE}
