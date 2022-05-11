@@ -374,7 +374,7 @@ CS_agg_new_high <-CS_agg(11.29)
 CS_agg_new_high
 ```
 
-#### The welfare of high income consumers is equal to `CS_agg_new`
+#### The welfare of high income consumers is equal to `CS_agg_new_high`
 
 # Graph the demand curves and the aggregate in one graph with the MES, MSC, and MPC
 
