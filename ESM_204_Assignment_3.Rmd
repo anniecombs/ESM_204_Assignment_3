@@ -321,10 +321,17 @@ Qtax <- function(p){
 Qtax <- Qtax(51)
 Qtax
 
+Ptax <- function(q){
+  p <- ((Qtax * m_MPC) + MEC)
+  return(p)
+}
 
-
+Ptax <- Ptax(Qtax)
+Ptax
 ```
 
+Qtax is 500290.5 
+Ptax is 11.29 cents
 
 #(b) The price of electricity
 - This is P*
