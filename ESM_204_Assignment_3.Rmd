@@ -382,21 +382,53 @@ ggplot() +
 
 #(d) Overall welfare of “low” income consumers
 
-# The overall welfare of low income consumers will decrease with the addition of the tax
+#### The overall welfare of low income consumers will decrease with the addition of the tax
 
 #(e) Power suppliers (i.e., electricity producers)
 
 - producer surplus
 
-```{r}
-PS_low_1 <- PS(Ptax, model_dem_low)
 
-PS_high_1 <- PS(Ptax, model_dem_high)
+```{r}
+PS <- function(p, model){
+  q <- demand(p, model)
+  ps <- 0.5 * p * q
+  return(ps)}
+
+PS_agg <- function (p){
+  ps <- PS(p,model_dem_low) + PS(p,model_dem_high)
+  return(ps)}
+
+Dagg_new <-function(p, model){
+  q <- (p - model$coefficients[[1]])/model$coefficients[[2]] - MEC
+  q <- ifelse(q<0,0,q)
+  return(q)}
+
+PS_new <- function(p, model){
+  q <- Dagg_new(p, model)
+  ps <- 0.5 * p* q
+  return(ps)}
+
+PS_new_agg <- function(p){
+  ps <-PS(p, high_dem_new) + PS(p, low_dem_new)
+  return(ps)}
+```
+
+```{r}
+PS_new_high <- PS_new(Ptax, model_dem_high)
+
+PS_new_low <- PS_new(Ptax, model_dem_low)
+
 ```
 ```{r}
-PS_total_1 <- PS_low_1 + PS_high_1
+PS_total_new <- PS_new_low + PS_new_high
+
+PS_total_new
 ```
 
+The welfare benefit to electricity producers is `r PS_total_new`
+
+#### The welfare benefit to Power Supplies is `r PS_total_1`
 
 #(f) Total environmental damage
 
