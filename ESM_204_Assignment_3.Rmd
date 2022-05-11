@@ -373,6 +373,7 @@ CS_agg <- function(p){
 CS_agg_new <-CS_agg(7.36)
 ```
 
+#### The welfare of high income consumers is equal to `CS_agg_new`
 
 # Graph the demand curves and the aggregate in one graph with the MES, MSC, and MPC
 
@@ -392,8 +393,6 @@ ggplot() +
        color = "Demand Curve") +
   theme_minimal()
 ```
-
-# The welfare of high income consumers does not change with the new tax
 
 
 #(d) Overall welfare of “low” income consumers
