@@ -317,11 +317,11 @@ Qtax is 500290.5
 #(b) The price of electricity
 ```{r}
 Ptax <- function(q){
-  p <- ((Qtax * m_MPC) + mec51)
+  p <- ((Qtax51 * m_MPC) + mec51)
   return(p)
 }
-Ptax51 <- Ptax(Qtax)
-Ptax
+Ptax51 <- Ptax(Qtax51)
+Ptax51
 ```
 
 Ptax is 11.29 cents
