@@ -442,7 +442,6 @@ ggplot() +
 
 ## Step 1: graph demand curves (see above)
 
-
 #(a) Overall welfare of “high” income consumers
 
 #(b) Overall welfare of “low” income consumers
