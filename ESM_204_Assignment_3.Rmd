@@ -42,6 +42,7 @@ demand_l_2 <- demand(p=2, model = model_dem_low)
 
 demand_h_2 <- demand(p=2, model = model_dem_high)
 
+
 ```
 
 ```{r}
@@ -65,16 +66,6 @@ ggplot(df, aes(Qagg, price)) +
 
 # I also define functions for calculating the consumer surplus:
 
-```{r}
-CS <- function(p, model){
-  q <- demand(p, model)
-  cs <- 0.5*(model$coefficients[[1]] - p)*q
-  return(cs)}
-
-CS_agg <- function(p){
-  cs <- CS(p,model_demand_l) + CS(p,model_demand_h)
-  return(cs)}
-```
 
 ```{r}
 
@@ -91,10 +82,13 @@ demand_agg <- function(p){
 }
 #price vector
 price = seq(0, 30, length.out = 100)
+
 #applying the aggregate demand function to the price vector
 Qagg <- map(price, demand_agg) %>% unlist()
+
 #making the new dataframe with Qagg and price
 agg_data<- tibble(Qagg = Qagg, price = price)
+
 #making predicted dataframes with low and high models
 l_pred <- tibble(price = price,
                  demand = demand(price, model_dem_low))
@@ -111,12 +105,29 @@ supply <- function(q){
 MPC <- tibble(price = supply(agg_data$Qagg),
               demand = agg_data$Qagg)
 
+# Price of CO2 per lb, 1MT = 2204.62 lb,  $51 per MT of CO2
+
+mt_lb <- 2204.62    # Metric Ton (MT) in lbs
+
+P_lbco2 <- 51*mt_lb   # CO2 - price per lb ($/lb)
+
+C_emit_per_kwh <- 0.85     # 1kWh = 0.85lb CO2, 0.85lb/kWh
+
+#  will need this MEC function in #4
+
+mec_f <- function(SCC) {              #  cents/kWh = ($/MT / (lb/MT)  * lb/kWh) * 100
+  round((SCC / mt_lb * C_emit_per_kwh) * 100, 3) 
+ 
+}      
+
+mec51 <- mec_f(51)   # SCC = $51 per MT
+
 #graph changes in demand
-Dagg_new <- agg_data - MEC
+Dagg_new <- agg_data - mec51
 
-low_dem_new <- l_pred - MEC
+low_dem_new <- l_pred - mec51
 
-high_dem_new <- h_pred - MEC
+high_dem_new <- h_pred - mec51
 
 #plot
 ggplot() +
@@ -133,49 +144,9 @@ ggplot() +
   theme_minimal()
 ```
 
-### 1. One kWh of electricity emits 0.85 pounds of CO2. Assuming that the interim SCC correctly reflects the total social cost of one metric ton of CO2, what is the marginal externality cost per kwH of electricity?
-
-```{r echo=FALSE}
-
-# Price of CO2 per lb, 1MT = 2204.62 lb,  $51 per MT of CO2
-
-mt_lb <- 2204.62    # Metric Ton (MT) in lbs
-
-P_lbco2 <- 51*mt_lb   # CO2 - price per lb ($/lb)
-
-C_emit_per_kwh <- 0.85     # 1kWh = 0.85lb CO2, 0.85lb/kWh
-
-#  will need this function in #4
-mec_f <- function(SCC) {              #  cents/kWh = ($/MT / (lb/MT)  * lb/kWh) * 100
-  round((SCC / mt_lb * C_emit_per_kwh) * 100, 3) 
- 
-}      
-
-mec51 <- mec_f(51)   # SCC = $51 per MT
-
-```
-
-
-- Convert 0.85 lbCO2 to metric ton (ton) CO2
-
-0.85 lb CO2 x 0.000453592 ton CO2/lb CO2
-
-= 0.0003855535 ton CO2 / Kwh
-
-- Multiply ton value by price per ton CO2 to get the marginal cost of the externality
-
-0.0003855535 ton CO2 / Kwh x $51 / ton CO2
-
-= $0.01966305 / ton CO2 x Kwh
-
 #### The MEC is `r mec51` cents per Kwh electricity
 
 # --
-
-```{r}
-MEC <- mec51
-```
-
 
 #2. What is the aggregate monthly demand curve for electricity? What is the supply curve for electricity? What is the “benefit” to consumers under the status quo? What is the “benefit” to producers under the status quo? What is the environmental cost under the status quo?
 
@@ -269,23 +240,15 @@ PS_sq <- PS(10, Dagg)
 
 PS_agg_sq <- PS_agg(10)
 
-EC <- function(p, model, mec){
+EC <- function(p, model){    # Total Environmental Cost
   q <- demand(p, model)
-  ec <- 0.5 * (p - mec) * q + mec * q
+  ec <- p * q
   return(ec)}
 
-EC_sq <- EC(10, MPC, 0)
+EC_sq <- EC(mec51, Dagg)
 
 ```
 
-# Graph the new Demand Curves (with tax)
-```{r}
-ggplot(Dagg_new) +
-  geom_line(low_dem_new, mapping = aes(x = demand, y= price, color = "New Low", lty = "New Low")) +
-  geom_line(Dagg_new, mapping = aes(x = Qagg, y= price, color = "New Aggregate", lty = "New Aggregate")) +
-  geom_line(h_pred, mapping = aes(x = demand, y= price, color = "New High", lty = "New High"))
-  
-```
 
 #### Aggregate Demand Curve: 
 #### Dagg = `r round(model_dem_high$coefficient[2], 5)`*Q + `r round(model_dem_high$coefficient[1], 1)` for Q < `r Qh_k`
@@ -298,6 +261,15 @@ ggplot(Dagg_new) +
 #### Producer Benefit: `r round(PS_agg_sq, 0)`
 
 #### Environmental cost: `r round(EC_sq, 0)`
+
+# Graph the new Demand Curves (with tax)
+```{r}
+ggplot(Dagg_new) +
+  geom_line(low_dem_new, mapping = aes(x = demand, y= price, color = "New Low", lty = "New Low")) +
+  geom_line(Dagg_new, mapping = aes(x = Qagg, y= price, color = "New Aggregate", lty = "New Aggregate")) +
+  geom_line(h_pred, mapping = aes(x = demand, y= price, color = "New High", lty = "New High"))
+  
+```
 
 
 #--
@@ -327,11 +299,11 @@ CS_h_p <- (CS_h_sq / CS_agg_sq) * 100
 
 ```{r}
 Qtax <- function(p){
-  q <- (Dagg$coefficient[1] - MEC) / (m_MPC - Magg)
+  q <- (Dagg$coefficient[1] - mec51) / (m_MPC - Magg)
   return(q)
 }
 
-Qtax <- Qtax(51)
+Qtax51 <- Qtax(51)
 Qtax
 
 ```
@@ -345,14 +317,14 @@ Qtax is 500290.5
 #(b) The price of electricity
 ```{r}
 Ptax <- function(q){
-  p <- ((Qtax * m_MPC) - MEC)
+  p <- ((Qtax51 * m_MPC) + mec51)
   return(p)
 }
-Ptax <- Ptax(Qtax)
-Ptax
+Ptax51 <- Ptax(Qtax51)
+Ptax51
 ```
 
-Ptax is 7.36 cents
+Ptax is 11.29 cents
 
 The price of electricity is `r Ptax`
 
@@ -360,20 +332,20 @@ The price of electricity is `r Ptax`
 #(c) Overall welfare of “high” income consumers
 
 ```{r}
+new_model_dem_low <-lm(price ~ demand, data = low_dem_new)
+new_model_dem_high <-lm(price ~ demand, data = high_dem_new)
+
 CS <- function(p, model){
   q <- demand(p, model)
   cs <- 0.5*(model$coefficients[[1]] - p)*q
   return(cs)}
 
-CS_agg <- function(p){
-  cs <- CS(p,model_dem_low) + CS(p,model_dem_high)
-  return(cs)}
-  
+CS_new_high <- CS(Ptax51, new_model_dem_high)
 
-CS_agg_new <-CS_agg(7.36)
+CS_new_high
 ```
 
-#### The welfare of high income consumers is equal to `CS_agg_new`
+#### The welfare of high income consumers is equal to `CS_agg_new_high`
 
 # Graph the demand curves and the aggregate in one graph with the MES, MSC, and MPC
 
@@ -386,7 +358,7 @@ ggplot() +
   geom_line(l_pred, mapping = aes(x = demand, y = price, color = "Low income")) +
   geom_line(h_pred, mapping = aes(x = demand, y = price, color = "High income")) +
   geom_line(MPC, mapping = aes(x = Q, y = price, color = "MPC")) +
-  geom_segment(aes(x = 0, y = 1.8, xend = 819713.75, yend = 1.8, color = "MEC")) +
+  geom_segment(aes(x = 0, y = 1.8, xend = 819713.75, yend = 1.8, color = "mec51")) +
   geom_line(MPC, mapping = aes(x = Q, y = price + 1.8, color = "MSC")) +
   labs(x = "Quantity (kWh)",
        y = "Price (cents)",
@@ -398,7 +370,9 @@ ggplot() +
 #(d) Overall welfare of “low” income consumers
 
 ```{r}
+CS_new_low <- CS(Ptax51, new_model_dem_low)
 
+CS_new_low
 ```
 
 
@@ -420,24 +394,22 @@ PS_agg <- function (p){
   return(ps)}
 
 Dagg_new <-function(p, model){
-  q <- (p - model$coefficients[[1]])/model$coefficients[[2]] - MEC
+  q <- (p - model$coefficients[[1]])/model$coefficients[[2]] - mec51
   q <- ifelse(q<0,0,q)
   return(q)}
+
+Dagg_new_d <- tibble(Qagg = Qagg, price = price)
 
 PS_new <- function(p, model){
   q <- Dagg_new(p, model)
   ps <- 0.5 * p* q
   return(ps)}
-
-PS_new_agg <- function(p){
-  ps <-PS(p, high_dem_new) + PS(p, low_dem_new)
-  return(ps)}
 ```
 
 ```{r}
-PS_new_high <- PS_new(Ptax, model_dem_high)
+PS_new_high <- PS_new(Ptax51, model_dem_high)
 
-PS_new_low <- PS_new(Ptax, model_dem_low)
+PS_new_low <- PS_new(Ptax51, model_dem_low)
 
 ```
 ```{r}
@@ -452,10 +424,10 @@ The welfare benefit to electricity producers is `r PS_total_new`
 
 #(f) Total environmental damage
 
-(MEC x Qs) x (MEC x Qtax)
+(mec51 x Qt) x (mec51 x Qtax)
 
 ```{r}
-Env_damage <- Qtax * MEC
+Env_damage <- Qtax51 * mec51
 ```
 
 #### Total environmental damage is equal to `r Env_damage`
@@ -463,7 +435,7 @@ Env_damage <- Qtax * MEC
 #(g) Total tax revenue generated
 
 ```{r}
-Tax_rev <- Qtax * mec51
+Tax_rev <- Qtax51 * mec51
 ```
 
 #### Tax revenue is equal to `r Tax_rev`
@@ -472,15 +444,28 @@ Tax_rev <- Qtax * mec51
 
 ```{r}
 
-MSC_F <- function(mec) {          # function to calculate MSC at different
-  mscF <- MPC_d %>% 
-  mutate(price = price + mec)
-  lm(price ~ Q, data = mscF)      # put in function, so have no data table
+# function to calculate Low Demand at different MECs
+LowD <- function(mec) {          
+  Low_D <- l_pred %>% 
+  mutate(price = price - mec)
+  lm(price ~ demand, data = Low_D)      # put in function, so have no data table
 }
 
-MSC51 <- MSC_F(mec51)             # Marginal Social Cost linear regression SCC of 51
+# function to calculate High Demand at different MECs
+HighD <- function(mec) {          
+  High_D <- h_pred %>% 
+  mutate(price = price - mec)
+  lm(price ~ demand, data = High_D)      # put in function, so have no data table
+}
 
-# MSC <- lm(price ~ Q, data = mscF)
+# test - Good!
+LowD51 <- LowD(mec51)
+
+HighD51 <- HighD(mec51)
+
+CS51 <- 51
+
+
 
 mec75 <- mec_f(75)    # maybe these two functions can be combined?
 MSC75 <- MSC_F(75)    
@@ -498,18 +483,18 @@ MSC150 <- MSC_F(150)
 ```{r}
 ggplot() +
   geom_line(low_dem_new, mapping = aes(x = demand, y= price, color = "New Low")) +
-  geom_line(Dagg_new, mapping = aes(x = Qagg, y= price, color = "New Aggregate")) +
+  geom_line(Dagg_new_d, mapping = aes(x = Qagg, y= price, color = "New Aggregate")) +
   geom_line(h_pred, mapping = aes(x = demand, y= price, color = "New High"))+
    geom_line(agg_data, mapping = aes(x = Qagg, y = price, color = "Aggregate")) +
   geom_line(l_pred, mapping = aes(x = demand, y = price, color = "Low income")) +
   geom_line(h_pred, mapping = aes(x = demand, y = price, color = "High income")) +
-  geom_line(MPC, mapping = aes(x = demand, y = price, color = "MPC")) +
+  geom_line(MPC_d, mapping = aes(x = Q, y = price, color = "MPC")) +
   geom_segment(aes(x = 0, y = 1.966, xend = 819713.75, yend = 1.966, color = "MEC")) +
   geom_segment(aes(x = 0, y = 3.856, xend = 819713.75, yend = 3.856, color = "MEC100"))+
   geom_segment(aes(x = 0, y = 4.819, xend = 819713.75, yend = 4.819, color = "MEC125"))+
   geom_segment(aes(x = 0, y = 5.783, xend = 819713.75, yend = 5.783, color = "MEC150"))+
   geom_segment(aes(x = 0, y = 2.892, xend = 819713.75, yend = 2.892, color = "MEC75"))+
-  geom_line(MPC, mapping = aes(x = demand, y = price + 1.8, color = "MSC")) +
+  geom_line(MPC_d, mapping = aes(x = Q, y = price + 2, color = "MSC")) +
   labs(x = "Quantity (kWh)",
        y = "Price (cents)",
        color = "Demand Curve") +
@@ -523,11 +508,53 @@ ggplot() +
 #(a) Overall welfare of “high” income consumers
 - new CS for high income consumers
 
-Code in demand change for each MEC and from there use high CS functions with each demand model to get your answer
+```{r}
+CS_agg_51_high <- CS_agg_new_high - (mec51 * Qtax(51))
+
+CS_agg_51_high
+
+CS_agg_75_high <- CS_agg_new_high - (mec75 * Qtax(75))
+
+CS_agg_75_high
+
+CS_agg_100_high <- CS_agg_new_high - (mec100 * Qtax(100))
+
+CS_agg_100_high
+
+CS_agg_125_high <- CS_agg_new_high - (mec125 * Qtax(125))
+
+CS_agg_125_high
+
+CS_agg_150_high <- CS_agg_new_high - (mec150 * Qtax(150))
+
+CS_agg_150_high
+```
+
 
 #(b) Overall welfare of “low” income consumers
 - CS for low income consumers (will graph)
 
+```{r}
+CS_agg_51_low <- CS_agg_new_low - (mec51 * Qtax)
+
+CS_agg_51_low
+
+CS_agg_75_low <- CS_agg_new_low - (mec75 * Qtax)
+
+CS_agg_75_low
+
+CS_agg_100_low <- CS_agg_new_low - (mec100 * Qtax)
+
+CS_agg_100_low
+
+CS_agg_125_low <- CS_agg_new_low - (mec125 * Qtax)
+
+CS_agg_125_low
+
+CS_agg_150_low <- CS_agg_new_low - (mec150 * Qtax)
+
+CS_agg_150_low
+```
 Code in demand change for each MEC and from there use low CS functions with each demand model to get your answer
 
 #(c) Electricity producers
@@ -559,7 +586,7 @@ ggplot()+
   geom_line(agg_data, mapping = aes(x = Qagg, y = price, color = "Aggregate")) +
   geom_line(l_pred, mapping = aes(x = demand, y = price, color = "Low income")) +
   geom_line(h_pred, mapping = aes(x = demand, y = price, color = "High income")) +
-  geom_line(MPC, mapping = aes(x = demand, y = price, color = "MPC")) +
+  geom_line(MPC_d, mapping = aes(x = Q, y = price, color = "MPC")) +
   geom_segment(aes(x = 0, y = 1.8, xend = 819713.75, yend = 1.8, color = "MEC")) +
   labs(x = "Quantity (kWh)",
        y = "Price (cents)",
