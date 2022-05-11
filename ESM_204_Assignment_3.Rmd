@@ -345,14 +345,14 @@ Qtax is 500290.5
 #(b) The price of electricity
 ```{r}
 Ptax <- function(q){
-  p <- ((Qtax * m_MPC) - MEC)
+  p <- ((Qtax * m_MPC) + MEC)
   return(p)
 }
 Ptax <- Ptax(Qtax)
 Ptax
 ```
 
-Ptax is 7.36 cents
+Ptax is 11.29 cents
 
 The price of electricity is `r Ptax`
 
@@ -370,7 +370,7 @@ CS_agg <- function(p){
   return(cs)}
   
 
-CS_agg_new <-CS_agg(7.36)
+CS_agg_new <-CS_agg(11.29)
 ```
 
 #### The welfare of high income consumers is equal to `CS_agg_new`
