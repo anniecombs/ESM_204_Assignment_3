@@ -502,12 +502,19 @@ ggplot() +
 
 #(a) Overall welfare of “high” income consumers
 - new CS for high income consumers
+
+Code in demand change for each MEC and from there use high CS functions with each demand model to get your answer
+
 #(b) Overall welfare of “low” income consumers
 - CS for low income consumers (will graph)
+
+Code in demand change for each MEC and from there use low CS functions with each demand model to get your answer
+
 #(c) Electricity producers
 - PS for electricity producers (will graph)
 
-Code in demand change for each MEC 
+Code in demand change for each MEC and from there use PS functions with each demand model to get your answer
+
 ```{r}
 PS_new_high <- PS_new(Ptax, model_dem_high)
 
@@ -543,9 +550,15 @@ ggplot()+
 
 #(a) What is total electricity consumption?
 
+must calculate new Dagg and repear the process to find a new Q*
+
 #(b) What is the total environmental externality?
 
+Find the damage caused by the amount purchased at the new Q*
+
 #(c) What value of the electricity tax makes the total environmental damage the same as the damage when solar panels are available to the high income group?
+
+Set tax equation equal to solar panel equation and solve
 
 Graphs if we want to show any.  It doesn't ask for any.  We would need to convert lms to dfs where we don't have them.  Maybe the extra work isn't worth it but wouldn't take much.
 - I agree that this might be super helpful. If it isn't too much extra trouble, I say we do it.
