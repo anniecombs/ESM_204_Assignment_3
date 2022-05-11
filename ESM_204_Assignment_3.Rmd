@@ -370,7 +370,8 @@ CS_agg <- function(p){
   return(cs)}
   
 
-CS_agg_new <-CS_agg(11.29)
+CS_agg_new_high <-CS_agg(11.29)
+CS_agg_new_high
 ```
 
 #### The welfare of high income consumers is equal to `CS_agg_new`
@@ -398,7 +399,9 @@ ggplot() +
 #(d) Overall welfare of “low” income consumers
 
 ```{r}
+CS_agg_new_low <- CS_agg_new_high - (MEC * Qtax)
 
+CS_agg_new_low
 ```
 
 
