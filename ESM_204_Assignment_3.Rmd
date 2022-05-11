@@ -386,6 +386,18 @@ ggplot() +
 
 #(e) Power suppliers (i.e., electricity producers)
 
+- producer surplus
+
+```{r}
+PS_low_1 <- PS(Ptax, model_dem_low)
+
+PS_high_1 <- PS(Ptax, model_dem_high)
+```
+```{r}
+PS_total_1 <- PS_low_1 + PS_high_1
+```
+
+
 #(f) Total environmental damage
 
 #(g) Total tax revenue generated
