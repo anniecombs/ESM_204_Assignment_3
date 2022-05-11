@@ -110,6 +110,14 @@ supply <- function(q){
 }
 MPC <- tibble(price = supply(agg_data$Qagg),
               demand = agg_data$Qagg)
+
+#graph changes in demand
+Dagg_new <- agg_data - MEC
+
+low_dem_new <- l_pred - MEC
+
+high_dem_new <- h_pred - MEC
+
 #plot
 ggplot() +
   geom_line(agg_data, mapping = aes(x = Qagg, y = price, color = "Aggregate", lty = "Aggregate")) +
@@ -272,12 +280,6 @@ EC_sq <- EC(10, MPC, 0)
 
 # Graph the new Demand Curves (with tax)
 ```{r}
-Dagg_new <- agg_data - MEC
-
-low_dem_new <- l_pred - MEC
-
-high_dem_new <- h_pred - MEC
-
 ggplot(Dagg_new) +
   geom_line(low_dem_new, mapping = aes(x = demand, y= price, color = "New Low", lty = "New Low")) +
   geom_line(Dagg_new, mapping = aes(x = Qagg, y= price, color = "New Aggregate", lty = "New Aggregate")) +
