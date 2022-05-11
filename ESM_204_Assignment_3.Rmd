@@ -317,6 +317,16 @@ Qtax <- function(p){
 Qtax <- Qtax(51)
 Qtax
 
+```
+<<<<<<< HEAD
+
+Qtax is 500290.5 
+=======
+### The amount of electricity produced and consumed is equal to `r Qtax`
+>>>>>>> 90c6a58ee93ea01c8d4b066741ab50479d7021ca
+
+#(b) The price of electricity
+```{r}
 Ptax <- function(q){
   p <- ((Qtax * m_MPC) + MEC)
   return(p)
@@ -325,27 +335,10 @@ Ptax <- function(q){
 Ptax <- Ptax(Qtax)
 Ptax
 ```
-<<<<<<< HEAD
 
-Qtax is 500290.5 
 Ptax is 11.29 cents
-=======
-### The amount of electricity produced and consumed is equal to `r Qtax`
->>>>>>> 90c6a58ee93ea01c8d4b066741ab50479d7021ca
 
-#(b) The price of electricity
-- This is P*
-P = b + mQ
-Dagg normal = P = b - t* + mQ 
-
-Set this expression equal to the supply curve
-
-Dagg socially optimal = b - t* + mQ = 0.1Q
-
-b is the y intercept of the Dagg function which is 2.897e+01 as previously calculated.
-
-2.897e+01 - t* + m_MPC = 0.1Q
-
+The price of electricity is `r Ptax`
 
 
 #(c) Overall welfare of “high” income consumers
