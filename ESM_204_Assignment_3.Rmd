@@ -42,8 +42,8 @@ demand_l_2 <- demand(p=2, model = model_dem_low)
 
 demand_h_2 <- demand(p=2, model = model_dem_high)
 
-price <- 0.5
-quantity <- demand_agg(price)
+# price <- 0.5
+# quantity <- demand_agg(price)
 ```
 
 ```{r}
@@ -140,7 +140,8 @@ P_lbco2 <- 51*mt_lb   # CO2 - price per lb ($/lb)
 
 C_emit_per_kwh <- 0.85     # 1kWh = 0.85lb CO2, 0.85lb/kWh
 
-#  will need this function in #4
+#  will need this MEC function in #4
+
 mec_f <- function(SCC) {              #  cents/kWh = ($/MT / (lb/MT)  * lb/kWh) * 100
   round((SCC / mt_lb * C_emit_per_kwh) * 100, 3) 
  
