@@ -431,10 +431,6 @@ PS_new <- function(p, model){
   q <- Dagg_new(p, model)
   ps <- 0.5 * p* q
   return(ps)}
-
-PS_new_agg <- function(p){
-  ps <-PS(p, high_dem_new) + PS(p, low_dem_new)
-  return(ps)}
 ```
 
 ```{r}
