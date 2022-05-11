@@ -273,8 +273,15 @@ EC_sq <- EC(10, MPC, 0)
 ```{r}
 Dagg_new <- agg_data - MEC
 
+low_dem_new <- l_pred - MEC
+
+high_dem_new <- h_pred - MEC
+
 ggplot(Dagg_new) +
-  geom_point(aes(x = Qagg, y= price))
+  geom_line(low_dem_new, mapping = aes(x = demand, y= price, color = "New Low", lty = "New Low")) +
+  geom_line(Dagg_new, mapping = aes(x = Qagg, y= price, color = "New Aggregate", lty = "New Aggregate")) +
+  geom_line(h_pred, mapping = aes(x = demand, y= price, color = "New High", lty = "New High"))
+  
 ```
 
 #### Aggregate Demand Curve: 
