@@ -321,22 +321,10 @@ Qtax <- function(p){
 Qtax <- Qtax(51)
 Qtax
 
+
+
 ```
 
-Find Q*
-t* is equal to the MEC from question 1 and therefore is equal to `r mec51`
-
-Dagg normal = P = b - t* + mQ 
-
-Set this expression equal to the supply curve
-
-Dagg socially optimal = b - t* + mQ = 0.1Q
-
-b is the y intercept of the Dagg function which is 2.897e+01 as previously calculated.
-
-2.897e+01 - t* + m_MPC = 0.1Q
-
-Q* = 270.03
 
 #(b) The price of electricity
 - This is P*
