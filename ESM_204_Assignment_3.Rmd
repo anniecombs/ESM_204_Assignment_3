@@ -332,18 +332,17 @@ The price of electricity is `r Ptax`
 #(c) Overall welfare of “high” income consumers
 
 ```{r}
+new_model_dem_low <-lm(price ~ demand, data = low_dem_new)
+new_model_dem_high <-lm(price ~ demand, data = high_dem_new)
+
 CS <- function(p, model){
   q <- demand(p, model)
   cs <- 0.5*(model$coefficients[[1]] - p)*q
   return(cs)}
 
-CS_agg <- function(p){
-  cs <- CS(p,model_dem_low) + CS(p,model_dem_high)
-  return(cs)}
-  
+CS_new_high <- CS(Ptax, new_model_dem_high)
 
-CS_agg_new_high <-CS_agg(Ptax) # use the new P value to calculate the new CS
-CS_agg_new_high
+CS_new_high
 ```
 
 #### The welfare of high income consumers is equal to `CS_agg_new_high`
@@ -371,9 +370,9 @@ ggplot() +
 #(d) Overall welfare of “low” income consumers
 
 ```{r}
-CS_agg_new_low <- CS_agg_new_high - (MEC * Qtax)
+CS_new_low <- CS(Ptax, new_model_dem_low)
 
-CS_agg_new_low
+CS_new_low
 ```
 
 
