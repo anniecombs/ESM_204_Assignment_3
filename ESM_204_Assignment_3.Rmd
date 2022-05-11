@@ -303,7 +303,7 @@ Qtax <- function(p){
   return(q)
 }
 
-Qtax <- Qtax(51)
+Qtax51 <- Qtax(51)
 Qtax
 
 ```
@@ -320,7 +320,7 @@ Ptax <- function(q){
   p <- ((Qtax * m_MPC) + mec51)
   return(p)
 }
-Ptax <- Ptax(Qtax)
+Ptax51 <- Ptax(Qtax)
 Ptax
 ```
 
@@ -340,7 +340,7 @@ CS <- function(p, model){
   cs <- 0.5*(model$coefficients[[1]] - p)*q
   return(cs)}
 
-CS_new_high <- CS(Ptax, new_model_dem_high)
+CS_new_high <- CS(Ptax51, new_model_dem_high)
 
 CS_new_high
 ```
@@ -370,7 +370,7 @@ ggplot() +
 #(d) Overall welfare of “low” income consumers
 
 ```{r}
-CS_new_low <- CS(Ptax, new_model_dem_low)
+CS_new_low <- CS(Ptax51, new_model_dem_low)
 
 CS_new_low
 ```
@@ -407,9 +407,9 @@ PS_new <- function(p, model){
 ```
 
 ```{r}
-PS_new_high <- PS_new(Ptax, model_dem_high)
+PS_new_high <- PS_new(Ptax51, model_dem_high)
 
-PS_new_low <- PS_new(Ptax, model_dem_low)
+PS_new_low <- PS_new(Ptax51, model_dem_low)
 
 ```
 ```{r}
@@ -435,7 +435,7 @@ Env_damage <- Qtax * mec51
 #(g) Total tax revenue generated
 
 ```{r}
-Tax_rev <- Qtax * mec51
+Tax_rev <- Qtax51 * mec51
 ```
 
 #### Tax revenue is equal to `r Tax_rev`
@@ -496,23 +496,23 @@ ggplot() +
 - new CS for high income consumers
 
 ```{r}
-CS_agg_51_high <- CS_agg_new_high - (mec51 * Qtax)
+CS_agg_51_high <- CS_agg_new_high - (mec51 * Qtax(51))
 
 CS_agg_51_high
 
-CS_agg_75_high <- CS_agg_new_high - (mec75 * Qtax)
+CS_agg_75_high <- CS_agg_new_high - (mec75 * Qtax(75))
 
 CS_agg_75_high
 
-CS_agg_100_high <- CS_agg_new_high - (mec100 * Qtax)
+CS_agg_100_high <- CS_agg_new_high - (mec100 * Qtax(100))
 
 CS_agg_100_high
 
-CS_agg_125_high <- CS_agg_new_high - (mec125 * Qtax)
+CS_agg_125_high <- CS_agg_new_high - (mec125 * Qtax(125))
 
 CS_agg_125_high
 
-CS_agg_150_high <- CS_agg_new_high - (mec150 * Qtax)
+CS_agg_150_high <- CS_agg_new_high - (mec150 * Qtax(150))
 
 CS_agg_150_high
 ```
@@ -573,7 +573,7 @@ ggplot()+
   geom_line(agg_data, mapping = aes(x = Qagg, y = price, color = "Aggregate")) +
   geom_line(l_pred, mapping = aes(x = demand, y = price, color = "Low income")) +
   geom_line(h_pred, mapping = aes(x = demand, y = price, color = "High income")) +
-  geom_line(MPC, mapping = aes(x = demand, y = price, color = "MPC")) +
+  geom_line(MPC_d, mapping = aes(x = Q, y = price, color = "MPC")) +
   geom_segment(aes(x = 0, y = 1.8, xend = 819713.75, yend = 1.8, color = "MEC")) +
   labs(x = "Quantity (kWh)",
        y = "Price (cents)",
