@@ -270,6 +270,7 @@ EC_sq <- EC(10, MPC, 0)
 
 ```
 
+# Graph the new Demand Curves (with tax)
 ```{r}
 Dagg_new <- agg_data - MEC
 
