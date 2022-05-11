@@ -214,7 +214,6 @@ Dagg_d <- Dagg_d %>%
 
 Dagg <- lm(price ~ Q, data = Dagg_d)  # Linear regression for Dagg(P) for Q > 158,329
 
-
 P_e <- 10    # current price of electricity in cents
 
 # Supply (MPC) goes thru P_e at Dagg and origin using Qagg = Sagg * P + Qint.  
@@ -268,6 +267,12 @@ EC <- function(p, model, mec){
 
 EC_sq <- EC(10, MPC, 0)
 
+```
+
+```{r}
+Dagg_new <- Dagg_d - MEC
+
+Dagg_new
 ```
 
 #### Aggregate Demand Curve: 
@@ -328,20 +333,22 @@ Qtax is 500290.5
 #(b) The price of electricity
 ```{r}
 Ptax <- function(q){
-  p <- ((Qtax * m_MPC) + MEC)
+  p <- ((Qtax * m_MPC) - MEC)
   return(p)
 }
-
 Ptax <- Ptax(Qtax)
 Ptax
 ```
 
-Ptax is 11.29 cents
+Ptax is 7.36 cents
 
 The price of electricity is `r Ptax`
 
 
 #(c) Overall welfare of “high” income consumers
+```{r}
+Qh_k
+```
 
 #(d) Overall welfare of “low” income consumers
 
