@@ -42,8 +42,6 @@ demand_l_2 <- demand(p=2, model = model_dem_low)
 
 demand_h_2 <- demand(p=2, model = model_dem_high)
 
-price <- 0.5
-quantity <- demand_agg(price)
 ```
 
 ```{r}
@@ -52,8 +50,6 @@ demand_agg <- function(p){
   q <- demand(p, model_dem_low) + demand(p, model_dem_high)
   return(q)}
 
-price <- 2
-quantity <- demand_agg(price)
 ```
 
 ```{r}
@@ -329,9 +325,13 @@ Ptax <- function(q){
 Ptax <- Ptax(Qtax)
 Ptax
 ```
+<<<<<<< HEAD
 
 Qtax is 500290.5 
 Ptax is 11.29 cents
+=======
+### The amount of electricity produced and consumed is equal to `r Qtax`
+>>>>>>> 90c6a58ee93ea01c8d4b066741ab50479d7021ca
 
 #(b) The price of electricity
 - This is P*
