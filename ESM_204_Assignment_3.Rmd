@@ -496,11 +496,53 @@ ggplot() +
 #(a) Overall welfare of “high” income consumers
 - new CS for high income consumers
 
-Code in demand change for each MEC and from there use high CS functions with each demand model to get your answer
+```{r}
+CS_agg_51_high <- CS_agg_new_high - (mec51 * Qtax)
+
+CS_agg_51_high
+
+CS_agg_75_high <- CS_agg_new_high - (mec75 * Qtax)
+
+CS_agg_75_high
+
+CS_agg_100_high <- CS_agg_new_high - (mec100 * Qtax)
+
+CS_agg_100_high
+
+CS_agg_125_high <- CS_agg_new_high - (mec125 * Qtax)
+
+CS_agg_125_high
+
+CS_agg_150_high <- CS_agg_new_high - (mec150 * Qtax)
+
+CS_agg_150_high
+```
+
 
 #(b) Overall welfare of “low” income consumers
 - CS for low income consumers (will graph)
 
+```{r}
+CS_agg_51_low <- CS_agg_new_low - (mec51 * Qtax)
+
+CS_agg_51_low
+
+CS_agg_75_low <- CS_agg_new_low - (mec75 * Qtax)
+
+CS_agg_75_low
+
+CS_agg_100_low <- CS_agg_new_low - (mec100 * Qtax)
+
+CS_agg_100_low
+
+CS_agg_125_low <- CS_agg_new_low - (mec125 * Qtax)
+
+CS_agg_125_low
+
+CS_agg_150_low <- CS_agg_new_low - (mec150 * Qtax)
+
+CS_agg_150_low
+```
 Code in demand change for each MEC and from there use low CS functions with each demand model to get your answer
 
 #(c) Electricity producers
