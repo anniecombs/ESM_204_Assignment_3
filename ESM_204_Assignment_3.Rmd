@@ -359,6 +359,25 @@ The price of electricity is `r Ptax`
 
 #(c) Overall welfare of “high” income consumers
 
+# Graph the demand curves and the aggregate in one graph with the MES, MSC, and MPC
+
+```{r}
+ggplot() +
+  geom_line(low_dem_new, mapping = aes(x = demand, y= price, color = "New Low")) +
+  geom_line(Dagg_new, mapping = aes(x = Qagg, y= price, color = "New Aggregate")) +
+  geom_line(h_pred, mapping = aes(x = demand, y= price, color = "New High"))+
+   geom_line(agg_data, mapping = aes(x = Qagg, y = price, color = "Aggregate")) +
+  geom_line(l_pred, mapping = aes(x = demand, y = price, color = "Low income")) +
+  geom_line(h_pred, mapping = aes(x = demand, y = price, color = "High income")) +
+  geom_line(MPC, mapping = aes(x = demand, y = price, color = "MPC")) +
+  geom_segment(aes(x = 0, y = 1.8, xend = 819713.75, yend = 1.8, color = "MEC")) +
+  geom_line(MPC, mapping = aes(x = demand, y = price + 1.8, color = "MSC")) +
+  labs(x = "Quantity (kWh)",
+       y = "Price (cents)",
+       color = "Demand Curve") +
+  theme_minimal()
+```
+
 # The welfare of high income consumers does not change with the new tax
 
 #(d) Overall welfare of “low” income consumers
@@ -399,25 +418,6 @@ MSC150 <- MSC_F(150)
 ```
 
 # The tax should be where the MEC meets the Q star (socially optimal quantity). In this case, the MEC is a straight, horizontal line, so the t star will simply equal around 2 cents per Kwh electricity. 
-
-# Graph the demand curves and the aggregate in one graph with the MES, MSC, and MPC
-
-```{r}
-ggplot() +
-  geom_line(low_dem_new, mapping = aes(x = demand, y= price, color = "New Low")) +
-  geom_line(Dagg_new, mapping = aes(x = Qagg, y= price, color = "New Aggregate")) +
-  geom_line(h_pred, mapping = aes(x = demand, y= price, color = "New High"))+
-   geom_line(agg_data, mapping = aes(x = Qagg, y = price, color = "Aggregate")) +
-  geom_line(l_pred, mapping = aes(x = demand, y = price, color = "Low income")) +
-  geom_line(h_pred, mapping = aes(x = demand, y = price, color = "High income")) +
-  geom_line(MPC, mapping = aes(x = demand, y = price, color = "MPC")) +
-  geom_segment(aes(x = 0, y = 1.8, xend = 819713.75, yend = 1.8, color = "MEC")) +
-  geom_line(MPC, mapping = aes(x = demand, y = price + 1.8, color = "MSC")) +
-  labs(x = "Quantity (kWh)",
-       y = "Price (cents)",
-       color = "Demand Curve") +
-  theme_minimal()
-```
 
 ## Step 1: graph demand curves (see above)
 
