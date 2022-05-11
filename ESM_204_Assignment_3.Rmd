@@ -42,8 +42,6 @@ demand_l_2 <- demand(p=2, model = model_dem_low)
 
 demand_h_2 <- demand(p=2, model = model_dem_high)
 
-price <- 0.5
-quantity <- demand_agg(price)
 ```
 
 ```{r}
@@ -52,8 +50,6 @@ demand_agg <- function(p){
   q <- demand(p, model_dem_low) + demand(p, model_dem_high)
   return(q)}
 
-price <- 2
-quantity <- demand_agg(price)
 ```
 
 ```{r}
