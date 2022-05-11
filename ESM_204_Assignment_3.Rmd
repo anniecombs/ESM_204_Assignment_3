@@ -369,9 +369,9 @@ ggplot() +
    geom_line(agg_data, mapping = aes(x = Qagg, y = price, color = "Aggregate")) +
   geom_line(l_pred, mapping = aes(x = demand, y = price, color = "Low income")) +
   geom_line(h_pred, mapping = aes(x = demand, y = price, color = "High income")) +
-  geom_line(MPC, mapping = aes(x = demand, y = price, color = "MPC")) +
+  geom_line(MPC, mapping = aes(x = Q, y = price, color = "MPC")) +
   geom_segment(aes(x = 0, y = 1.8, xend = 819713.75, yend = 1.8, color = "MEC")) +
-  geom_line(MPC, mapping = aes(x = demand, y = price + 1.8, color = "MSC")) +
+  geom_line(MPC, mapping = aes(x = Q, y = price + 1.8, color = "MSC")) +
   labs(x = "Quantity (kWh)",
        y = "Price (cents)",
        color = "Demand Curve") +
