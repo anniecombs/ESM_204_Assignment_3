@@ -427,7 +427,7 @@ The welfare benefit to electricity producers is `r PS_total_new`
 (mec51 x Qt) x (mec51 x Qtax)
 
 ```{r}
-Env_damage <- Qtax * mec51
+Env_damage <- Qtax51 * mec51
 ```
 
 #### Total environmental damage is equal to `r Env_damage`
@@ -444,15 +444,28 @@ Tax_rev <- Qtax51 * mec51
 
 ```{r}
 
-MSC_F <- function(mec) {          # function to calculate MSC at different
-  mscF <- MPC_d %>% 
-  mutate(price = price + mec)
-  lm(price ~ Q, data = mscF)      # put in function, so have no data table
+# function to calculate Low Demand at different MECs
+LowD <- function(mec) {          
+  Low_D <- l_pred %>% 
+  mutate(price = price - mec)
+  lm(price ~ demand, data = Low_D)      # put in function, so have no data table
 }
 
-MSC51 <- MSC_F(mec51)             # Marginal Social Cost linear regression SCC of 51
+# function to calculate High Demand at different MECs
+HighD <- function(mec) {          
+  High_D <- h_pred %>% 
+  mutate(price = price - mec)
+  lm(price ~ demand, data = High_D)      # put in function, so have no data table
+}
 
-# MSC <- lm(price ~ Q, data = mscF)
+# test - Good!
+LowD51 <- LowD(mec51)
+
+HighD51 <- HighD(mec51)
+
+CS51 <- 51
+
+
 
 mec75 <- mec_f(75)    # maybe these two functions can be combined?
 MSC75 <- MSC_F(75)    
