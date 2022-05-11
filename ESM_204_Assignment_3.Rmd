@@ -115,6 +115,7 @@ ggplot() +
   geom_line(agg_data, mapping = aes(x = Qagg, y = price, color = "Aggregate", lty = "Aggregate")) +
   geom_line(l_pred, mapping = aes(x = demand, y = price, color = "Low income", lty = "Low income")) +
   geom_line(h_pred, mapping = aes(x = demand, y = price, color = "High income", lty = "High income")) +
+  geom_line(Dagg_new, mapping = aes(x = Qagg, y= price, color = "New Aggregate", lty = "New Aggregate")) +
   geom_line(MPC, mapping = aes(x = demand, y = price, color = "MPC", lty = "MPC")) +
   geom_segment(aes(x = 0, y = 1.8, xend = 819713.75, yend = 1.8, color = "MEC", lty = "MEC")) +
   geom_line(MPC, mapping = aes(x = demand, y = price + 1.8, color = "MSC", lty = "MSC")) +
