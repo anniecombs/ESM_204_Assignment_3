@@ -359,6 +359,21 @@ The price of electricity is `r Ptax`
 
 #(c) Overall welfare of “high” income consumers
 
+```{r}
+CS <- function(p, model){
+  q <- demand(p, model)
+  cs <- 0.5*(model$coefficients[[1]] - p)*q
+  return(cs)}
+
+CS_agg <- function(p){
+  cs <- CS(p,model_dem_low) + CS(p,model_dem_high)
+  return(cs)}
+  
+
+CS_agg_new <-CS_agg(7.36)
+```
+
+
 # Graph the demand curves and the aggregate in one graph with the MES, MSC, and MPC
 
 ```{r}
@@ -380,7 +395,13 @@ ggplot() +
 
 # The welfare of high income consumers does not change with the new tax
 
+
 #(d) Overall welfare of “low” income consumers
+
+```{r}
+
+```
+
 
 #### The overall welfare of low income consumers will decrease with the addition of the tax
 
