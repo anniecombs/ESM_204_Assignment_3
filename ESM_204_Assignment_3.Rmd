@@ -273,6 +273,9 @@ EC_sq <- EC(10, MPC, 0)
 Dagg_new <- Dagg_d - MEC
 
 Dagg_new
+
+ggplot(Dagg_new) +
+  geom_point(aes(x = Q, y= price))
 ```
 
 #### Aggregate Demand Curve: 
