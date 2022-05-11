@@ -335,12 +335,12 @@ Qtax <- Qtax(51)
 Qtax
 
 ```
-<<<<<<< HEAD
+
 
 Qtax is 500290.5 
 =======
 ### The amount of electricity produced and consumed is equal to `r Qtax`
->>>>>>> 90c6a58ee93ea01c8d4b066741ab50479d7021ca
+
 
 #(b) The price of electricity
 ```{r}
