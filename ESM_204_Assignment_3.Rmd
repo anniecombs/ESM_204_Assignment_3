@@ -324,7 +324,7 @@ Qtax
 
 
 ```
-
+### The amount of electricity produced and consumed is equal to `r Qtax`
 
 #(b) The price of electricity
 - This is P*
