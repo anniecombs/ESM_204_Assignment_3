@@ -786,23 +786,26 @@ solar_high <- 0.5*(high_dem_new)
 
 model_dem_solar <-lm(price ~ demand, data = solar_high)
 
-Dagg_solar <- function(p){
-  q <- demand(p, model_dem_solar) + demand(p, new_model_dem_low)
-  return(q)}
-#demand_h_pv <- mh + Ptax51/2
-
-Dagg_solar_d <- tibble(Qagg = Qagg, price = price)
-
-Dagg_solar(Ptax51)
-#  make dataframe and model, combine model with model_dem_low for new Dagg
+# demand fucntion after tax
+demand_solar <- function(p, model){
+  q <- (p - (0.5*model$coefficients[1]))/model$coefficients[2]
+  q <- ifelse(q<0,0,q)
+  return(q)
+}
+# aggregate demand curve function after tax
+demand_agg_solar <- function(p){
+  q <- demand_solar(p, new_model_dem_low) + demand_solar(p, new_model_dem_high)
+  return(q)
+}
 
 Qtax_solar <- function(mec){
   q <- (model_dem_solar$coefficient[1] - mec) / (m_MPC - Magg)
   return(q)
 }
 
-Qtax51_solar <- Qtax_solar(mec51)
-Qtax51_solar
+Qtax_solar51 <- Qtax_solar(mec51)
+Qtax_solar51
+
 # find new P*_pv - answer
 
 ```
