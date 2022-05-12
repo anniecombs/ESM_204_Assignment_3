@@ -444,41 +444,6 @@ HighD <- function(mec) {
 }
 
 
-LowD51 <- LowD(mec51)
-
-HighD51 <- HighD(mec51)
-
-CS_h51 <- CS(Ptax51, HighD51)
-
-
-LowD75 <- LowD(mec75)
-
-HighD75 <- HighD(mec75)
-
-CS_h75 <- CS(Ptax75, HighD75)
-
-
-LowD100 <- LowD(mec100)
-
-HighD100 <- HighD(mec100)
-
-CS_h100 <- CS(Ptax100, HighD100)
-
-
-LowD125 <- LowD(mec125)
-
-HighD125 <- HighD(mec125)
-
-CS_h125 <- CS(Ptax125, HighD125)
-
-
-
-LowD150 <- LowD(mec150)
-
-HighD150 <- HighD(mec150)
-
-CS_h150 <- CS(Ptax150, HighD150)
-
 
 #  MAYBE CALULATE Qtax## and Ptax## Here
 
@@ -546,6 +511,40 @@ Ptax <- function(q){
 Ptax150 <- Ptax(Qtax150)
 Ptax150
 
+LowD51 <- LowD(mec51)
+
+HighD51 <- HighD(mec51)
+
+CS_h51 <- CS(Ptax51, HighD51)
+
+
+LowD75 <- LowD(mec75)
+
+HighD75 <- HighD(mec75)
+
+CS_h75 <- CS(Ptax75, HighD75)
+
+
+LowD100 <- LowD(mec100)
+
+HighD100 <- HighD(mec100)
+
+CS_h100 <- CS(Ptax100, HighD100)
+
+
+LowD125 <- LowD(mec125)
+
+HighD125 <- HighD(mec125)
+
+CS_h125 <- CS(Ptax125, HighD125)
+
+
+
+LowD150 <- LowD(mec150)
+
+HighD150 <- HighD(mec150)
+
+CS_h150 <- CS(Ptax150, HighD150)
 ```
 
 ```{r}
