@@ -634,7 +634,7 @@ welfareH150 <- CS_H150 + PtaxR_H150
 
 ```
 
-#### Ob=verall Welfare for High Incpome Comsumers:
+#### Overall Welfare for High Incpome Comsumers:
 
 #### Scc = 51: `r welfareH51`
 #### Scc = 75: `r welfareH75`
@@ -724,10 +724,7 @@ PS_L51 <- PS_new(Ptax51, model_dem_low)
 
 
 PS_Agg_51 <- PS_new_low + PS_new_high  # Total benefit to Electric producers
-
-
-
-Ptax75 <- Ptax(mec75)
+PS_Agg_51 <- PS_H51 + PS_L51
 
 
 PS_H75 <- PS_new(Ptax75, model_dem_high)
@@ -736,13 +733,44 @@ PS_L75 <- PS_new(Ptax75, model_dem_low)
 
 
 PS_Agg_75 <- PS_new_low + PS_new_high  # Total benefit to Electric producers
+PS_Agg_75 <- PS_H75 + PS_L75
 
 
+PS_H100 <- PS_new(Ptax100, model_dem_high)
+
+PS_L100 <- PS_new(Ptax100, model_dem_low)
+
+PS_Agg_100 <- PS_new_low + PS_new_high
+PS_Agg_100 <- PS_H100 + PS_L100
+
+
+PS_H125 <- PS_new(Ptax125, model_dem_high)
+
+PS_L125 <- PS_new(Ptax125, model_dem_low)
+
+
+PS_Agg_125 <- PS_new_low + PS_new_high
+PS_Agg_125 <- PS_H125 + PS_L125
+
+
+
+PS_H150 <- PS_new(Ptax150, model_dem_high)
+
+PS_L150 <- PS_new(Ptax150, model_dem_low)
+
+
+PS_Agg_150 <- PS_new_low + PS_new_high 
+PS_Agg_150 <- PS_H150 + PS_L150
 
 ```
 
 #  State PSagg and that it remains constant
 
+#### Scc = 51: `r PS_Agg_51`
+#### Scc = 75: `r PS_Agg_75`
+#### Scc = 100: `r PS_Agg_100`
+#### Scc = 125: `r PS_Agg_125`
+#### Scc = 150: `r PS_Agg_150`
 
 
 #6. Suppose the “high” income group has access to expensive home solar generation. This lowers the electricity demand curve for the “high” income group by half (vertically). Under this new demand:
