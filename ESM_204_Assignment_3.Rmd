@@ -729,6 +729,8 @@ must calculate new Dagg and repear the process to find a new Q*
 ```{r}
 # demand_h_pv <- mh + Pint/2
 
+Dagg_solar <-
+
 #  make dataframe and model, combine model with model_dem_low for new Dagg
 
 # find new P*_pv - answer
