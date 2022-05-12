@@ -789,7 +789,7 @@ bh_solar <- model_dem_solar$coefficient[1]
 
 Sagg_solar <- (ml_solar + mh_solar)/(ml_solar*mh_solar)  
 
-Magg_solar <-  -3.7e-04          # Slope of aggregate solar, solved by hand
+Magg_solar <-  -3.7e-04          # Slope of aggregate solar, solved by hand (rise/run)
 Qint_solar <- -(bl_solar/ml_solar + bh_solar/mh_solar)
 
 Qtax_solar <- function(mec){
