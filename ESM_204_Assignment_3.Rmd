@@ -377,9 +377,7 @@ CS_new_low
 #### The overall welfare of low income consumers will decrease with the addition of the tax
 
 #(e) Power suppliers (i.e., electricity producers)
-
-- producer surplus
-
+producer surplus
 
 ```{r}
 PS <- function(p, model){
@@ -420,8 +418,7 @@ PS_total_new
 
 
 #(f) Total environmental damage
-
-#### (mec51 x Qtax51)
+(mec51 x Qtax51)
 
 ```{r}
 Env_damage <- Qtax51 * mec51
@@ -456,7 +453,7 @@ HighD <- function(mec) {
   lm(price ~ demand, data = High_D)      # put in function, so have no data table
 }
 
-# test - Good!
+
 LowD51 <- LowD(mec51)
 
 HighD51 <- HighD(mec51)
@@ -587,7 +584,7 @@ ggplot() +
 ## Step 1: graph demand curves (see above)
 
 ### (a) Overall welfare of “high” income consumers
-- new CS for high income consumers
+new CS for high income consumers
 
 ```{r}
 # high welfare for SCC = 51, will need to calculate Qtax for each
@@ -643,6 +640,7 @@ welfareH150 <- CS_H150 + PtaxR_H150
 #### Scc = 150: `r welfareH150`
 
 ### (b) Overall welfare of “low” income consumers
+Code in demand change for each MEC and from there use low CS functions with each demand model to get your answer
 
 ```{r}
 # low welfare for SCC = 51, will need to calculate Qtax for each
@@ -705,11 +703,7 @@ welfareL150 <- CS_L150 + PtaxR_L150 - Burden_L150
 #### Scc = 150: `r welfareL150`
 
 
-Code in demand change for each MEC and from there use low CS functions with each demand model to get your answer
-
 #### (c) Electricity producers
-- PS for electricity producers (will graph) DONT WORRY about this
-
 Code in demand change for each MEC and from there use PS functions with each demand model to get your answer
 
 ```{r}
@@ -776,10 +770,9 @@ PS_Agg_150 <- PS_H150 + PS_L150
 #6. Suppose the “high” income group has access to expensive home solar generation. This lowers the electricity demand curve for the “high” income group by half (vertically). Under this new demand:
 
 
-
 #(a) What is total electricity consumption?
 
-must calculate new Dagg and repear the process to find a new Q*
+must calculate new Dagg and repeat the process to find a new Q*
 
 ```{r}
 solar_high <- 0.5*(high_dem_new)
@@ -820,6 +813,7 @@ Qtax_solar51
 
 ```
 
+#### The total electricity consumption is `Qtax_solar51`
 
 #(b) What is the total environmental externality?
 
@@ -833,6 +827,7 @@ Env_damage_solar <- Qtax_solar51 * mec51
 Env_damage_solar
 ```
 
+#### The environmental externality caused by solar is `Env_damage_solar`
 
 #(c) What value of the electricity tax makes the total environmental damage the same as the damage when solar panels are available to the high income group?
 
@@ -847,9 +842,9 @@ solar_tax <- mec51/(Env_damage_solar/EC_sq)
 solar_tax
 ```
 
+#### The value of the new tax should be `solar_tax`
 
-Graphs if we want to show any.  It doesn't ask for any.  We would need to convert lms to dfs where we don't have them.  Maybe the extra work isn't worth it but wouldn't take much.
-- I agree that this might be super helpful. If it isn't too much extra trouble, I say we do it.
+### Supplemental Graphs
 
 ```{r echo=FALSE}
 
