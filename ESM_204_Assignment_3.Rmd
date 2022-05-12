@@ -463,18 +463,46 @@ HighD51 <- HighD(mec51)
 
 CS_h51 <- CS(Ptax51, HighD51)
 
+LowD75 <- LowD(mec75)
+
 #  MAYBE CALULATE Qtax## and Ptax## Here
 
 mec75 <- mec_f(75)    # maybe these two functions can be combined?
-  
+
+Qtax <- function(mec){
+  q <- (Dagg$coefficient[1] - mec) / (m_MPC - Magg)
+  return(q)
+}
+
+Qtax75 <- Qtax(mec75)
+Qtax75  
 
 mec100 <- mec_f(100)
+Qtax <- function(mec){
+  q <- (Dagg$coefficient[1] - mec) / (m_MPC - Magg)
+  return(q)
+}
 
+Qtax100 <- Qtax(mec100)
+Qtax100
 
 mec125 <- mec_f(125)
+Qtax <- function(mec){
+  q <- (Dagg$coefficient[1] - mec) / (m_MPC - Magg)
+  return(q)
+}
 
+Qtax125 <- Qtax(mec125)
+Qtax125
 
 mec150 <- mec_f(150)
+Qtax <- function(mec){
+  q <- (Dagg$coefficient[1] - mec) / (m_MPC - Magg)
+  return(q)
+}
+
+Qtax150 <- Qtax(mec150)
+Qtax150
 
 ```
 
