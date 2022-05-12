@@ -262,16 +262,6 @@ EC_sq <- EC(mec51, Dagg)
 
 #### Environmental cost: `r round(EC_sq, 0)`
 
-# Graph the new Demand Curves (with tax) - Dagg_new_d deined later
-```{r  echo=FALSE}
-#ggplot(Dagg_new_d) +
- # geom_line(low_dem_new, mapping = aes(x = demand, y= price, color = "New Low", lty = "New Low")) +
-  #geom_line(Dagg_new_d, mapping = aes(x = Qagg, y= price, color = "New Aggregate", lty = "New Aggregate")) +
-  #geom_line(h_pred, mapping = aes(x = demand, y= price, color = "New High", lty = "New High"))
-  
-```
-
-
 #--
 
 #3. How is the current consumer benefit divided between “high” and “low” income consumers?
@@ -866,6 +856,7 @@ ggplot()+
   
 ```
 
+# Graph the original demand curves separately
 ```{r}
 
 MEC51 <- tibble(Q = seq(0, Qint, 100), price = mec51)
@@ -884,4 +875,13 @@ ggplot(data = join_data, aes(x = Q,
                              y = price, 
                              color = Curves)) +
   geom_line()
+```
+
+# Graph the new Demand Curves (with tax)
+```{r  echo=FALSE}
+ggplot(Dagg_new_d) +
+geom_line(low_dem_new, mapping = aes(x = demand, y= price, color = "New Low", lty = "New Low")) +
+geom_line(Dagg_new_d, mapping = aes(x = Qagg, y= price, color = "New Aggregate", lty = "New Aggregate")) +
+geom_line(h_pred, mapping = aes(x = demand, y= price, color = "New High", lty = "New High"))
+  
 ```
