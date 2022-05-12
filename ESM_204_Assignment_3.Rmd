@@ -782,22 +782,27 @@ PS_Agg_150 <- PS_H150 + PS_L150
 must calculate new Dagg and repear the process to find a new Q*
 
 ```{r}
-
-Dagg_solar <- function(p,model){
-  q <- (mh + Ptax51/2) + demand(p, low_dem_new)
-  return(q)}
-
-solar_high <- h_pred/2
+solar_high <- 0.5*(high_dem_new)
 
 model_dem_solar <-lm(price ~ demand, data = solar_high)
+
+Dagg_solar <- function(p){
+  q <- demand(p, model_dem_solar) + demand(p, new_model_dem_low)
+  return(q)}
 #demand_h_pv <- mh + Ptax51/2
 
 Dagg_solar_d <- tibble(Qagg = Qagg, price = price)
 
-Dagg_solar(Ptax51, model_dem_low)
-
+Dagg_solar(Ptax51)
 #  make dataframe and model, combine model with model_dem_low for new Dagg
 
+Qtax_solar <- function(mec){
+  q <- (model_dem_solar$coefficient[1] - mec) / (m_MPC - Magg)
+  return(q)
+}
+
+Qtax51_solar <- Qtax_solar(mec51)
+Qtax51_solar
 # find new P*_pv - answer
 
 ```
