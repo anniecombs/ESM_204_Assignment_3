@@ -16,7 +16,7 @@ library(janitor)
 library(tibble)
 ```
 
-```{r}
+```{r echo=FALSE}
 df <-read_csv("HW3_data.csv") %>%
   select(-1) %>%
   clean_names()
@@ -262,12 +262,12 @@ EC_sq <- EC(mec51, Dagg)
 
 #### Environmental cost: `r round(EC_sq, 0)`
 
-# Graph the new Demand Curves (with tax)
-```{r}
-ggplot(Dagg_new) +
-  geom_line(low_dem_new, mapping = aes(x = demand, y= price, color = "New Low", lty = "New Low")) +
-  geom_line(Dagg_new, mapping = aes(x = Qagg, y= price, color = "New Aggregate", lty = "New Aggregate")) +
-  geom_line(h_pred, mapping = aes(x = demand, y= price, color = "New High", lty = "New High"))
+# Graph the new Demand Curves (with tax) - Dagg_new_d deined later
+```{r  echo=FALSE}
+#ggplot(Dagg_new_d) +
+ # geom_line(low_dem_new, mapping = aes(x = demand, y= price, color = "New Low", lty = "New Low")) +
+  #geom_line(Dagg_new_d, mapping = aes(x = Qagg, y= price, color = "New Aggregate", lty = "New Aggregate")) +
+  #geom_line(h_pred, mapping = aes(x = demand, y= price, color = "New High", lty = "New High"))
   
 ```
 
@@ -298,20 +298,18 @@ CS_h_p <- (CS_h_sq / CS_agg_sq) * 100
 #(a) The amount of electricity produced and consumed
 
 ```{r}
-Qtax <- function(p){
-  q <- (Dagg$coefficient[1] - mec51) / (m_MPC - Magg)
+Qtax <- function(mec){
+  q <- (Dagg$coefficient[1] - mec) / (m_MPC - Magg)
   return(q)
 }
 
-Qtax51 <- Qtax(51)
-Qtax
+Qtax51 <- Qtax(mec51)
+Qtax51
 
 ```
 
-
-Qtax is 500290.5 
 =======
-### The amount of electricity produced and consumed is equal to `r Qtax`
+### The amount of electricity produced and consumed is equal to `r Qtax51`
 
 
 #(b) The price of electricity
@@ -324,14 +322,14 @@ Ptax51 <- Ptax(Qtax51)
 Ptax51
 ```
 
-Ptax is 11.29 cents
-
-The price of electricity is `r Ptax`
+#### The price of electricity is `r Ptax51`
 
 
 #(c) Overall welfare of “high” income consumers
 
 ```{r}
+
+#  Why is this here?
 new_model_dem_low <-lm(price ~ demand, data = low_dem_new)
 new_model_dem_high <-lm(price ~ demand, data = high_dem_new)
 
@@ -349,7 +347,7 @@ CS_new_high
 
 # Graph the demand curves and the aggregate in one graph with the MES, MSC, and MPC
 
-```{r}
+```{r ech}
 ggplot() +
   geom_line(low_dem_new, mapping = aes(x = demand, y= price, color = "New Low")) +
   geom_line(Dagg_new, mapping = aes(x = Qagg, y= price, color = "New Aggregate")) +
@@ -418,13 +416,12 @@ PS_total_new <- PS_new_low + PS_new_high
 PS_total_new
 ```
 
-The welfare benefit to electricity producers is `r PS_total_new`
+#### The welfare benefit to electricity producers is `r PS_total_new`
 
-#### The welfare benefit to Power Supplies is `r PS_total_1`
 
 #(f) Total environmental damage
 
-(mec51 x Qt) x (mec51 x Qtax)
+#### (mec51 x Qtax51)
 
 ```{r}
 Env_damage <- Qtax51 * mec51
@@ -439,8 +436,9 @@ Tax_rev <- Qtax51 * mec51
 ```
 
 #### Tax revenue is equal to `r Tax_rev`
+#--
 
-#5. Now, assume that all revenue from the electricity tax will be redistributed to the consumers in proportion to their pre-tax consumption. For example, if 80% of the electricity was consumed by “high” income consumers, then they get 80% of the tax revenue. Additionally, consider the fact that current scientific evidence suggests the true SCC may be much higher than $51. For a range of SCC values ($51, $75, $100, $125, and $150 per metric ton of CO2), calculate the effects of an SCC-based electricity tax on:
+### 5. Now, assume that all revenue from the electricity tax will be redistributed to the consumers in proportion to their pre-tax consumption. For example, if 80% of the electricity was consumed by “high” income consumers, then they get 80% of the tax revenue. Additionally, consider the fact that current scientific evidence suggests the true SCC may be much higher than $51. For a range of SCC values ($51, $75, $100, $125, and $150 per metric ton of CO2), calculate the effects of an SCC-based electricity tax on:
 
 ```{r}
 
@@ -463,21 +461,21 @@ LowD51 <- LowD(mec51)
 
 HighD51 <- HighD(mec51)
 
-CS51 <- 51
+CS_h51 <- CS(Ptax51, HighD51)
 
-
+#  MAYBE CALULATE Qtax## and Ptax## Here
 
 mec75 <- mec_f(75)    # maybe these two functions can be combined?
-MSC75 <- MSC_F(75)    
+  
 
 mec100 <- mec_f(100)
-MSC100 <- MSC_F(100)
+
 
 mec125 <- mec_f(125)
-MSC125 <- MSC_F(125)
+
 
 mec150 <- mec_f(150)
-MSC150 <- MSC_F(150)
+
 ```
 
 ```{r}
@@ -505,84 +503,189 @@ ggplot() +
 
 ## Step 1: graph demand curves (see above)
 
-#(a) Overall welfare of “high” income consumers
+### (a) Overall welfare of “high” income consumers
 - new CS for high income consumers
 
 ```{r}
-CS_agg_51_high <- CS_agg_new_high - (mec51 * Qtax(51))
+# high welfare for SCC = 51, will need to calculate Qtax for each
 
-CS_agg_51_high
 
-CS_agg_75_high <- CS_agg_new_high - (mec75 * Qtax(75))
+CS_H51 <- CS(mec51, HighD51)  # P = mec and model at High Demand at SCC = 51
 
-CS_agg_75_high
+PtaxR_H51 <- (demand(P_e, model_dem_high)/Q_p_e) * (mec51 * Qtax51)  # (pretax use %)*Tax Revenue (SCC = 51)    
 
-CS_agg_100_high <- CS_agg_new_high - (mec100 * Qtax(100))
+welfareH51 <- CS_H51 + PtaxR_H51
 
-CS_agg_100_high
+# Cut and Paste for the rest
+```
 
-CS_agg_125_high <- CS_agg_new_high - (mec125 * Qtax(125))
+#### Ob=verall Welfare for High Incpome Comsumers:
 
-CS_agg_125_high
+#### Scc = 51: `r welfareH51`
 
-CS_agg_150_high <- CS_agg_new_high - (mec150 * Qtax(150))
+#### Cut and paste
 
-CS_agg_150_high
+```{r}
+# low welfare for SCC = 51, will need to calculate Qtax for each
+
+CS_L51 <- CS(mec51, LowD51)  # P = mec and model at High Demand at SCC = 51
+
+PtaxR_L51 <- (demand(P_e, model_dem_low)/Q_p_e) * (mec51 * Qtax51)  # (pretax use %)*Tax Revenue (SCC = 51)    
+
+Burden_L51 <- mec51 * Qtax51   # low income bears the environmental burden like in 4
+
+welfareL51 <- CS_L51 + PtaxR_L51 - Burden_L51
+
 ```
 
 
-#(b) Overall welfare of “low” income consumers
-- CS for low income consumers (will graph)
+
+### (b) Overall welfare of “low” income consumers
+
 
 ```{r}
-CS_agg_51_low <- CS_agg_new_low - (mec51 * Qtax)
+#Not the right method
 
-CS_agg_51_low
+#CS_agg_51_high <- CS_agg_new_high - (mec51 * Qtax(51))
 
-CS_agg_75_low <- CS_agg_new_low - (mec75 * Qtax)
+#CS_agg_51_high
 
-CS_agg_75_low
+#CS_agg_75_high <- CS_agg_new_high - (mec75 * Qtax(75))
 
-CS_agg_100_low <- CS_agg_new_low - (mec100 * Qtax)
+#CS_agg_75_high
 
-CS_agg_100_low
+#CS_agg_100_high <- CS_agg_new_high - (mec100 * Qtax(100))
 
-CS_agg_125_low <- CS_agg_new_low - (mec125 * Qtax)
+#CS_agg_100_high
 
-CS_agg_125_low
+#CS_agg_125_high <- CS_agg_new_high - (mec125 * Qtax(125))
 
-CS_agg_150_low <- CS_agg_new_low - (mec150 * Qtax)
+#CS_agg_125_high
 
-CS_agg_150_low
+#CS_agg_150_high <- CS_agg_new_high - (mec150 * Qtax(150))
+
+#CS_agg_150_high
+```
+
+
+
+
+```{r}
+
+#Not quite right 
+
+
+#CS_agg_51_low <- CS_agg_new_low - (mec51 * Qtax)
+
+#CS_agg_51_low
+
+#CS_agg_75_low <- CS_agg_new_low - (mec75 * Qtax)
+
+#CS_agg_75_low
+
+#CS_agg_100_low <- CS_agg_new_low - (mec100 * Qtax)
+
+#CS_agg_100_low
+
+#CS_agg_125_low <- CS_agg_new_low - (mec125 * Qtax)
+#
+#CS_agg_125_low
+
+#CS_agg_150_low <- CS_agg_new_low - (mec150 * Qtax)
+
+#CS_agg_150_low
 ```
 Code in demand change for each MEC and from there use low CS functions with each demand model to get your answer
 
-#(c) Electricity producers
-- PS for electricity producers (will graph)
+#### (c) Electricity producers
+- PS for electricity producers (will graph) DONT WORRY about this
 
 Code in demand change for each MEC and from there use PS functions with each demand model to get your answer
 
 ```{r}
-PS_new_high <- PS_new(Ptax, model_dem_high)
 
-PS_new_low <- PS_new(Ptax, model_dem_low)
+# Will need to calculate Ptax for each SCC - Looks like their benefit stays the same even with the customers paying more due to tax.
+
+# For SCC = 51, copy and paste for other SCCs
+
+PS_H51 <- PS_new(Ptax51, model_dem_high)
+
+PS_L51 <- PS_new(Ptax51, model_dem_low)
 
 
-PS_total_new <- PS_new_low + PS_new_high
+PS_Agg_51 <- PS_new_low + PS_new_high  # Total benefit to Electric producers
 
-PS_total_new
+
+
+Ptax75 <- Ptax(mec75)
+
+
+PS_H75 <- PS_new(Ptax75, model_dem_high)
+
+PS_L75 <- PS_new(Ptax75, model_dem_low)
+
+
+PS_Agg_75 <- PS_new_low + PS_new_high  # Total benefit to Electric producers
+
+
+
 ```
+
+#  State Pagg and that it remains constant
+
+
 
 #6. Suppose the “high” income group has access to expensive home solar generation. This lowers the electricity demand curve for the “high” income group by half (vertically). Under this new demand:
 
+
+
+#(a) What is total electricity consumption?
+
+must calculate new Dagg and repear the process to find a new Q*
+
 ```{r}
-solar_high <- high_dem_new/2
+# demand_h_pv <- mh + Pint/2
+
+#  make dataframe and model, combine model with model_dem_low
+
+# find new P*_pv - answer
+
+```
+
+
+#(b) What is the total environmental externality?
+
+Find the damage caused by the amount purchased at the new Q*
+
+```{r}
+ 
+# Answer = mec51 * Q*_pv from P*_pv in (a)
+ 
+```
+
+
+#(c) What value of the electricity tax makes the total environmental damage the same as the damage when solar panels are available to the high income group?
+
+Set tax equation equal to solar panel equation and solve
+
+```{r}
+
+# Solar Tax = mec51 * Qtax_pv (Q1 in Git hub file I uploaded) for new Dagg from (a)
+
+```
+
+
+Graphs if we want to show any.  It doesn't ask for any.  We would need to convert lms to dfs where we don't have them.  Maybe the extra work isn't worth it but wouldn't take much.
+- I agree that this might be super helpful. If it isn't too much extra trouble, I say we do it.
+
+```{r echo=FALSE}
+
 
 ggplot()+
   geom_line(low_dem_new, mapping = aes(x = demand, y= price, color = "New Low")) +
-  geom_line(Dagg_new, mapping = aes(x = Qagg, y= price, color = "New Aggregate")) +
+  geom_line(Dagg_new_d, mapping = aes(x = Qagg, y= price, color = "New Aggregate")) +
   geom_line(h_pred, mapping = aes(x = demand, y= price, color = "New High"))+
-  geom_line(solar_high, mapping = aes(x = demand, y = price, color = "High With Solar"))+
+ # geom_line(solar_high, mapping = aes(x = demand, y = price, color = "High With Solar"))+
   geom_line(agg_data, mapping = aes(x = Qagg, y = price, color = "Aggregate")) +
   geom_line(l_pred, mapping = aes(x = demand, y = price, color = "Low income")) +
   geom_line(h_pred, mapping = aes(x = demand, y = price, color = "High income")) +
@@ -595,20 +698,6 @@ ggplot()+
   
 ```
 
-#(a) What is total electricity consumption?
-
-must calculate new Dagg and repear the process to find a new Q*
-
-#(b) What is the total environmental externality?
-
-Find the damage caused by the amount purchased at the new Q*
-
-#(c) What value of the electricity tax makes the total environmental damage the same as the damage when solar panels are available to the high income group?
-
-Set tax equation equal to solar panel equation and solve
-
-Graphs if we want to show any.  It doesn't ask for any.  We would need to convert lms to dfs where we don't have them.  Maybe the extra work isn't worth it but wouldn't take much.
-- I agree that this might be super helpful. If it isn't too much extra trouble, I say we do it.
 ```{r}
 
 MEC51 <- tibble(Q = seq(0, Qint, 100), price = mec51)
