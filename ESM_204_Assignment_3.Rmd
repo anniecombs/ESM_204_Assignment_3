@@ -755,17 +755,18 @@ must calculate new Dagg and repear the process to find a new Q*
 
 ```{r}
 
-solar_high <- high_dem_new/2
+Dagg_solar <- function(p,model){
+  q <- (mh + Ptax51/2) + demand(p, low_dem_new)
+  return(q)}
+
+solar_high <- h_pred/2
+
 model_dem_solar <-lm(price ~ demand, data = solar_high)
 #demand_h_pv <- mh + Ptax51/2
-Dagg_solar <-function(p, model){
-  q <- (p - model$coefficients[[1]])/model$coefficients[[2]] - mec51
-  q <- ifelse(q<0,0,q)
-  return(q)}
 
 Dagg_solar_d <- tibble(Qagg = Qagg, price = price)
 
-Dagg_solar(Ptax51, model_dem_solar)
+Dagg_solar(Ptax51, model_dem_low)
 
 #  make dataframe and model, combine model with model_dem_low for new Dagg
 
