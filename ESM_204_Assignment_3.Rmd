@@ -1,6 +1,6 @@
 ---
 title: "ESM_204_Assignment_3"
-author: "Annie Combs"
+author: "Sage Davis and Jack Miller"
 date: "May 7, 2022"
 output: html_document
 ---
@@ -764,21 +764,18 @@ PS_Agg_75 <- PS_new_low + PS_new_high  # Total benefit to Electric producers
 must calculate new Dagg and repear the process to find a new Q*
 
 ```{r}
-# demand_h_pv <- mh + Pint/2
 
 solar_high <- high_dem_new/2
-
 model_dem_solar <-lm(price ~ demand, data = solar_high)
-
-Dagg_solar_lm <- lm(price ~ demand, data = solar_high)
-
+#demand_h_pv <- mh + Ptax51/2
 Dagg_solar <-function(p, model){
   q <- (p - model$coefficients[[1]])/model$coefficients[[2]] - mec51
   q <- ifelse(q<0,0,q)
   return(q)}
 
-Dagg_solar(Ptax51, model_dem_solar)
 Dagg_solar_d <- tibble(Qagg = Qagg, price = price)
+
+Dagg_solar(Ptax51, model_dem_solar)
 
 #  make dataframe and model, combine model with model_dem_low for new Dagg
 
