@@ -802,7 +802,7 @@ Qtax_solar51
 
 ```
 
-#### The total electricity consumption is `Qtax_solar51`
+#### The total electricity consumption is `r Qtax_solar51`
 
 #(b) What is the total environmental externality?
 
@@ -816,7 +816,7 @@ Env_damage_solar <- Qtax_solar51 * mec51
 Env_damage_solar
 ```
 
-#### The environmental externality caused by solar is `Env_damage_solar`
+#### The environmental externality caused by solar is `r Env_damage_solar`
 
 #(c) What value of the electricity tax makes the total environmental damage the same as the damage when solar panels are available to the high income group?
 
@@ -831,7 +831,7 @@ solar_tax <- mec51/(Env_damage_solar/EC_sq)
 solar_tax
 ```
 
-#### The value of the new tax should be `solar_tax`
+#### The value of the new tax should be `r solar_tax`
 
 ### Supplemental Graphs
 
