@@ -599,12 +599,49 @@ PtaxR_H51 <- (demand(P_e, model_dem_high)/Q_p_e) * (mec51 * Qtax51)  # (pretax u
 
 welfareH51 <- CS_H51 + PtaxR_H51
 
+
+
+CS_H75 <- CS(mec75, HighD75)  # P = mec and model at High Demand at SCC = 75
+
+PtaxR_H75 <- (demand(P_e, model_dem_high)/Q_p_e) * (mec75 * Qtax75)  # (pretax use %)*Tax Revenue (SCC = 75)    
+
+welfareH75 <- CS_H75 + PtaxR_H75
+
+
+
+CS_H100 <- CS(mec100, HighD100)  # P = mec and model at High Demand at SCC = 100
+
+PtaxR_H100 <- (demand(P_e, model_dem_high)/Q_p_e) * (mec100 * Qtax100)  # (pretax use %)*Tax Revenue (SCC = 100)    
+
+welfareH100 <- CS_H100 + PtaxR_H100
+
+
+
+CS_H125 <- CS(mec125, HighD125)  # P = mec and model at High Demand at SCC = 125
+
+PtaxR_H125 <- (demand(P_e, model_dem_high)/Q_p_e) * (mec125 * Qtax125)  # (pretax use %)*Tax Revenue (SCC = 125)    
+
+welfareH125 <- CS_H125 + PtaxR_H125
+
+
+
+CS_H150 <- CS(mec150, HighD150)  # P = mec and model at High Demand at SCC = 150
+
+PtaxR_H150 <- (demand(P_e, model_dem_high)/Q_p_e) * (mec150 * Qtax150)  # (pretax use %)*Tax Revenue (SCC = 150)    
+
+welfareH150 <- CS_H150 + PtaxR_H150
+
+
 # Cut and Paste for the rest
 ```
 
 #### Ob=verall Welfare for High Incpome Comsumers:
 
 #### Scc = 51: `r welfareH51`
+#### Scc = 75: `r welfareH75`
+#### Scc = 100: `r welfareH100`
+#### Scc = 125: `r welfareH125`
+#### Scc = 150: `r welfareH150`
 
 #### Cut and paste
 
