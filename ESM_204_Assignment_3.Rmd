@@ -786,27 +786,37 @@ solar_high <- 0.5*(high_dem_new)
 
 model_dem_solar <-lm(price ~ demand, data = solar_high)
 
-# demand fucntion after tax
+# demand fucntion with tax
 demand_solar <- function(p, model){
   q <- (p - (0.5*model$coefficients[1]))/model$coefficients[2]
   q <- ifelse(q<0,0,q)
   return(q)
 }
-# aggregate demand curve function after tax
+# aggregate demand curve function with tax
 demand_agg_solar <- function(p){
   q <- demand_solar(p, new_model_dem_low) + demand_solar(p, new_model_dem_high)
   return(q)
 }
 
+ml_solar <- new_model_dem_low$coefficient[2]  
+bl_solar <- new_model_dem_low$coefficient[1]  
+
+mh_solar <- model_dem_solar$coefficient[2]  
+bh_solar <- model_dem_solar$coefficient[1]  
+
+Sagg_solar <- (ml_solar + mh_solar)/(ml_solar*mh_solar)  
+
+Magg_solar <-  -3.7e-04          # Slope of aggregate solar, solved by hand
+Qint_solar <- -(bl_solar/ml_solar + bh_solar/mh_solar)
+
 Qtax_solar <- function(mec){
-  q <- (model_dem_solar$coefficient[1] - mec) / (m_MPC - Magg)
+  q <- (model_dem_solar$coefficient[1] - mec51) / (m_MPC - Magg_solar)
   return(q)
 }
 
 Qtax_solar51 <- Qtax_solar(mec51)
 Qtax_solar51
 
-# find new P*_pv - answer
 
 ```
 
@@ -818,7 +828,7 @@ Find the damage caused by the amount purchased at the new Q*
 ```{r}
  
 # Answer = mec51 * Q*_pv from P*_pv in (a)
- Env_damage_solar <- Qtax_solar51 * mec51
+Env_damage_solar <- Qtax_solar51 * mec51
 
 Env_damage_solar
 ```
