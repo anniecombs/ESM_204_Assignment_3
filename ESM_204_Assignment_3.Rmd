@@ -818,7 +818,9 @@ Find the damage caused by the amount purchased at the new Q*
 ```{r}
  
 # Answer = mec51 * Q*_pv from P*_pv in (a)
- 
+ Env_damage_solar <- Qtax_solar51 * mec51
+
+Env_damage_solar
 ```
 
 
