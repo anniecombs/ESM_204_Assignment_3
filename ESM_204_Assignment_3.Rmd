@@ -840,8 +840,11 @@ Set tax equation equal to solar panel equation and solve
 
 ```{r}
 
-# Solar Tax = mec51 * Qtax_pv (Q1 in Git hub file I uploaded) for new Dagg from (a)
+# Solar Tax = mec51 * Qtax_solar51 for new Dagg from (a)
 
+solar_tax <- mec51*Qtax_solar51
+
+solar_tax = EC_sq
 ```
 
 
