@@ -632,7 +632,6 @@ PtaxR_H150 <- (demand(P_e, model_dem_high)/Q_p_e) * (mec150 * Qtax150)  # (preta
 welfareH150 <- CS_H150 + PtaxR_H150
 
 
-# Cut and Paste for the rest
 ```
 
 #### Ob=verall Welfare for High Incpome Comsumers:
@@ -643,7 +642,7 @@ welfareH150 <- CS_H150 + PtaxR_H150
 #### Scc = 125: `r welfareH125`
 #### Scc = 150: `r welfareH150`
 
-#### Cut and paste
+### (b) Overall welfare of “low” income consumers
 
 ```{r}
 # low welfare for SCC = 51, will need to calculate Qtax for each
@@ -656,65 +655,56 @@ Burden_L51 <- mec51 * Qtax51   # low income bears the environmental burden like 
 
 welfareL51 <- CS_L51 + PtaxR_L51 - Burden_L51
 
+
+
+CS_L75 <- CS(mec75, LowD75)  # P = mec and model at High Demand at SCC = 75
+
+PtaxR_L75 <- (demand(P_e, model_dem_low)/Q_p_e) * (mec75 * Qtax75)  # (pretax use %)*Tax Revenue (SCC = 75)    
+
+Burden_L75 <- mec75 * Qtax75   # low income bears the environmental burden like in 4
+
+welfareL75 <- CS_L75 + PtaxR_L75 - Burden_L75
+
+
+
+CS_L100 <- CS(mec100, LowD100)  # P = mec and model at High Demand at SCC = 100
+
+PtaxR_L100 <- (demand(P_e, model_dem_low)/Q_p_e) * (mec100 * Qtax100)  # (pretax use %)*Tax Revenue (SCC = 100)    
+
+Burden_L100 <- mec100 * Qtax100   # low income bears the environmental burden like in 4
+
+welfareL100 <- CS_L100 + PtaxR_L100 - Burden_L100
+
+
+
+CS_L125 <- CS(mec125, LowD125)  # P = mec and model at High Demand at SCC = 125
+
+PtaxR_L125 <- (demand(P_e, model_dem_low)/Q_p_e) * (mec125 * Qtax125)  # (pretax use %)*Tax Revenue (SCC = 125)    
+
+Burden_L125 <- mec125 * Qtax125   # low income bears the environmental burden like in 4
+
+welfareL125 <- CS_L125 + PtaxR_L125 - Burden_L125
+
+
+
+CS_L150 <- CS(mec150, LowD150)  # P = mec and model at High Demand at SCC = 150
+
+PtaxR_L150 <- (demand(P_e, model_dem_low)/Q_p_e) * (mec150 * Qtax150)  # (pretax use %)*Tax Revenue (SCC = 150)    
+
+Burden_L150 <- mec150 * Qtax150   # low income bears the environmental burden like in 4
+
+welfareL150 <- CS_L150 + PtaxR_L150 - Burden_L150
+
+
 ```
 
+#### Scc = 51: `r welfareL51`
+#### Scc = 75: `r welfareL75`
+#### Scc = 100: `r welfareL100`
+#### Scc = 125: `r welfareL125`
+#### Scc = 150: `r welfareL150`
 
 
-### (b) Overall welfare of “low” income consumers
-
-
-```{r}
-#Not the right method
-
-#CS_agg_51_high <- CS_agg_new_high - (mec51 * Qtax(51))
-
-#CS_agg_51_high
-
-#CS_agg_75_high <- CS_agg_new_high - (mec75 * Qtax(75))
-
-#CS_agg_75_high
-
-#CS_agg_100_high <- CS_agg_new_high - (mec100 * Qtax(100))
-
-#CS_agg_100_high
-
-#CS_agg_125_high <- CS_agg_new_high - (mec125 * Qtax(125))
-
-#CS_agg_125_high
-
-#CS_agg_150_high <- CS_agg_new_high - (mec150 * Qtax(150))
-
-#CS_agg_150_high
-```
-
-
-
-
-```{r}
-
-#Not quite right 
-
-
-#CS_agg_51_low <- CS_agg_new_low - (mec51 * Qtax)
-
-#CS_agg_51_low
-
-#CS_agg_75_low <- CS_agg_new_low - (mec75 * Qtax)
-
-#CS_agg_75_low
-
-#CS_agg_100_low <- CS_agg_new_low - (mec100 * Qtax)
-
-#CS_agg_100_low
-
-#CS_agg_125_low <- CS_agg_new_low - (mec125 * Qtax)
-#
-#CS_agg_125_low
-
-#CS_agg_150_low <- CS_agg_new_low - (mec150 * Qtax)
-
-#CS_agg_150_low
-```
 Code in demand change for each MEC and from there use low CS functions with each demand model to get your answer
 
 #### (c) Electricity producers
