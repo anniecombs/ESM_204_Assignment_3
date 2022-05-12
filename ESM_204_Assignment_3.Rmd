@@ -631,7 +631,7 @@ PS_Agg_75 <- PS_new_low + PS_new_high  # Total benefit to Electric producers
 
 ```
 
-#  State Pagg and that it remains constant
+#  State PSagg and that it remains constant
 
 
 
@@ -646,7 +646,7 @@ must calculate new Dagg and repear the process to find a new Q*
 ```{r}
 # demand_h_pv <- mh + Pint/2
 
-#  make dataframe and model, combine model with model_dem_low
+#  make dataframe and model, combine model with model_dem_low for new Dagg
 
 # find new P*_pv - answer
 
