@@ -766,6 +766,11 @@ PS_Agg_150 <- PS_H150 + PS_L150
 
 #  State PSagg and that it remains constant
 
+#### Scc = 51: `r PS_Agg_51`
+#### Scc = 75: `r PS_Agg_75`
+#### Scc = 100: `r PS_Agg_100`
+#### Scc = 125: `r PS_Agg_125`
+#### Scc = 150: `r PS_Agg_150`
 
 
 #6. Suppose the “high” income group has access to expensive home solar generation. This lowers the electricity demand curve for the “high” income group by half (vertically). Under this new demand:
